@@ -1,0 +1,8 @@
+arrow
+flask
+flask-cors
+flask_restful
+flask-socketio
+pymongo
+pyyaml
+requests
