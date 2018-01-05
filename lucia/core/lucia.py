@@ -25,4 +25,4 @@ class LuciaCore(object):
         print('Starting Up Lucia\'s Endpoint!')
         print('--------------------------------')
         flask_cors.CORS(self.flask, origins=self.cfg.app.cors)
-        self.webs.run(self.flask, self.cfg.app.host, self.cfg.app.port)
+        self.webs.run(self.flask, self.cfg.app.host, self.cfg.app.port, debug=self.cfg.app.debug)

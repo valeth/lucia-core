@@ -1,5 +1,4 @@
 import json
-
 import arrow
 from flask_socketio import Namespace, emit
 
