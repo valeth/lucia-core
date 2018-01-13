@@ -1,7 +1,7 @@
 import arrow
 import flask
 import flask_restful
-import flask_socketio
+# import flask_socketio
 import flask_cors
 
 from lucia.core.nodes.config import Configuration
@@ -17,7 +17,7 @@ class LuciaCore(object):
         self.db = Database(self)
         # noinspection PyTypeChecker
         self.rest = flask_restful.Api(self.flask)
-        self.webs = flask_socketio.SocketIO(self.flask)
+        # self.webs = flask_socketio.SocketIO(self.flask)
         self.loader = EndpointLoader(self)
 
     def run(self):
@@ -25,4 +25,4 @@ class LuciaCore(object):
         print('Starting Up Lucia\'s Endpoint!')
         print('--------------------------------')
         flask_cors.CORS(self.flask, origins=self.cfg.app.cors)
-        self.webs.run(self.flask, self.cfg.app.host, self.cfg.app.port, debug=self.cfg.app.debug)
+        self.flask.run(self.cfg.app.host, self.cfg.app.port, debug=self.cfg.app.debug)
