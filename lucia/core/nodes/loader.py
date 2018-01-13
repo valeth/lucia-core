@@ -26,7 +26,7 @@ class EndpointLoader(object):
 
     def load_websockets(self):
         print('--------------------------------')
-        print('Loading REST Endpoints')
+        print('Loading WEBS Endpoints')
         print('--------------------------------')
         for root, dirs, files in os.walk(self.webs_rid):
             for file in files:
