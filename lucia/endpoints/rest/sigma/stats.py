@@ -1,13 +1,11 @@
-import json
-from flask_socketio import Namespace, emit
+from flask_restful import Resource
 
 
-def load_webs_endpoint(core):
-    location = '/webs/sigma/stats'
+def load_rest_endpoint(core):
+    location = '/rest/sigma/stats'
 
-    class SigmaStatistics(Namespace):
-        def __init__(self, namespace):
-            super().__init__(namespace)
+    class SigmaStatistics(Resource):
+        def __init__(self):
             self.core = core
 
         def get_command_stats(self):
@@ -48,29 +46,20 @@ def load_webs_endpoint(core):
                 out_data.update({stat_name: stat_count})
             return out_data
 
-        def on_get_stats(self, data):
-            if data.get('stat') == 'all':
-                event_stats = self.get_event_stats()
-                command_count, command_stats = self.get_command_stats()
-                population_stats = self.get_population_stats()
-                special_stats = self.get_special_stats()
-                out_data = {
-                    'commands': command_stats,
-                    'events': event_stats,
-                    'general': {
-                        'population': population_stats,
-                        'cmd_count': command_count
-                    },
-                    'special': special_stats
-                }
-            else:
-                lookup = self.core.db.aurora.CommandStats.find({'command': data.get('stat')})
-                if not lookup:
-                    out_data = {'error': 'Statistic not found.'}
-                else:
-                    del lookup['_id']
-                    out_data = lookup
-            out_data = json.dumps(out_data)
-            emit('sigma_stats', out_data)
+        def get(self):
+            event_stats = self.get_event_stats()
+            command_count, command_stats = self.get_command_stats()
+            population_stats = self.get_population_stats()
+            special_stats = self.get_special_stats()
+            out_data = {
+                'commands': command_stats,
+                'events': event_stats,
+                'general': {
+                    'population': population_stats,
+                    'cmd_count': command_count
+                },
+                'special': special_stats
+            }
+            return out_data
 
     return SigmaStatistics, location

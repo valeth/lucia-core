@@ -1,24 +1,22 @@
-import json
-from flask_socketio import Namespace, emit
+from flask_restful import Resource
 from lucia.core.utils.creators import make_usr_def_data
 
 
-def load_webs_endpoint(core):
-    location = '/webs/sigma/leaderboard'
+def load_rest_endpoint(core):
+    location = '/rest/sigma/leaderboard/<string:board>'
 
-    class SigmaLeaderboard(Namespace):
-        def __init__(self, namespace):
-            super().__init__(namespace)
+    class SigmaLeaderboard(Resource):
+        def __init__(self):
             self.core = core
 
-        def on_get_board(self, data):
-            if data.get('type') == 'currency':
+        def get(self, board):
+            if board == 'currency':
                 collection = 'CurrencySystem'
                 sort_key = 'global'
-            elif data.get('type') == 'experience':
+            elif board == 'experience':
                 collection = 'ExperienceSystem'
                 sort_key = 'global'
-            elif data.get('type') == 'cookies':
+            elif board == 'cookies':
                 collection = 'Cookies'
                 sort_key = 'Cookies'
             else:
@@ -38,7 +36,6 @@ def load_webs_endpoint(core):
                 out_data = {'leaderboard': outlist}
             else:
                 out_data = {'error': 'Unrecognized type.'}
-            out_data = json.dumps(out_data)
-            emit('leaderboard_push', out_data)
+            return out_data
 
     return SigmaLeaderboard, location
