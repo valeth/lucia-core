@@ -12,17 +12,17 @@ from lucia.core.nodes.loader import EndpointLoader
 class LuciaCore(object):
     def __init__(self):
         self.flask = flask.Flask(__name__)
+        flask_cors.CORS(self.flask, origins=self.cfg.app.cors)
         self.start = arrow.utcnow()
         self.cfg = Configuration()
         self.db = Database(self)
         # noinspection PyTypeChecker
         self.rest = flask_restful.Api(self.flask)
-        self.webs = flask_socketio.SocketIO(self.flask, cors_allowed_origins=self.cfg.app.cors)
+        self.webs = flask_socketio.SocketIO(self.flask)
         self.loader = EndpointLoader(self)
 
     def run(self):
         print('--------------------------------')
         print('Starting Up Lucia\'s Endpoint!')
         print('--------------------------------')
-        flask_cors.CORS(self.flask, origins=self.cfg.app.cors)
         self.webs.run(self.flask, self.cfg.app.host, self.cfg.app.port, debug=self.cfg.app.debug)
