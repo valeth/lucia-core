@@ -16,7 +16,6 @@ class LuciaCore(object):
         self.cfg = Configuration()
         self.db = Database(self)
         # noinspection PyTypeChecker
-        flask_cors.CORS(self.flask, origins=self.cfg.app.cors)
         self.rest = flask_restful.Api(self.flask)
         self.webs = flask_socketio.SocketIO(self.flask)
         self.loader = EndpointLoader(self)
@@ -25,4 +24,5 @@ class LuciaCore(object):
         print('--------------------------------')
         print('Starting Up Lucia\'s Endpoint!')
         print('--------------------------------')
+        flask_cors.CORS(self.flask, origins=self.cfg.app.cors)
         self.webs.run(self.flask, self.cfg.app.host, self.cfg.app.port, debug=self.cfg.app.debug)
