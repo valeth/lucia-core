@@ -17,7 +17,7 @@ class LuciaCore(object):
         self.db = Database(self)
         # noinspection PyTypeChecker
         self.rest = flask_restful.Api(self.flask)
-        self.webs = flask_socketio.SocketIO(self.flask)
+        self.webs = flask_socketio.SocketIO(self.flask, cors_allowed_origins=self.cfg.app.cors)
         self.loader = EndpointLoader(self)
 
     def run(self):

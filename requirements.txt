@@ -1,8 +1,10 @@
 arrow
+eventlet
 flask
 flask-cors
 flask_restful
 flask-socketio
+gevent
 pymongo
 pyyaml
 requests
