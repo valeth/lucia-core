@@ -33,7 +33,8 @@ def load_rest_endpoint(core):
                 'patreon': 'patreon',
                 'statistics': 'bar-chart-2',
                 'mathematics': 'hash',
-                'miscellaneous': 'command'
+                'miscellaneous': 'command',
+                'logging': 'shield'
             }
 
         def load_commands(self):
