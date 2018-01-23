@@ -1,5 +1,6 @@
 from flask_restful import Resource
-from lucia.core.utils.creators import make_usr_def_data
+from lucia.core.utils.details import get_user
+from lucia.core.utils.creators import make_usr_def_data, make_compat_data
 
 
 def load_rest_endpoint(core):
@@ -27,9 +28,9 @@ def load_rest_endpoint(core):
                 outlist = []
                 for doc in all_docs:
                     uid = doc.get('UserID')
-                    user_data = self.core.db.aurora.UserDetails.find_one({'UserID': uid})
+                    user_data = get_user(self.core.cfg.app.token, uid)
                     if user_data:
-                        del user_data['_id']
+                        user_data = make_compat_data(user_data)
                     else:
                         user_data = make_usr_def_data(uid)
                     outlist.append({'user': user_data, 'value': doc.get(sort_key)})
