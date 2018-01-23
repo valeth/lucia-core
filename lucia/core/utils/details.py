@@ -7,10 +7,13 @@ guild_cache = {}
 
 def get_user(token, user_id):
     cached_user = guild_cache.get(user_id)
-    need_fresh = True
     if cached_user:
         if cached_user.get('stamp') + 3600 < arrow.utcnow().float_timestamp:
+            need_fresh = True
+        else:
             need_fresh = False
+    else:
+        need_fresh = True
     if need_fresh:
         time.sleep(1)
         headers = {'Authorization': f'Bot {token}'}
