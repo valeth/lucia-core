@@ -8,7 +8,7 @@ guild_cache = {}
 def get_user(token, user_id):
     cached_user = guild_cache.get(user_id)
     if cached_user:
-        if cached_user.get('stamp') + 3600 < arrow.utcnow().float_timestamp:
+        if cached_user.get('stamp') + 21600 < arrow.utcnow().float_timestamp:
             need_fresh = True
         else:
             need_fresh = False
