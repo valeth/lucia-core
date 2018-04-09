@@ -116,7 +116,7 @@ def load_rest_endpoint(core):
                 target_line = self.get_correct(line_number, line_results)
                 if target_line:
                     time_table_data = self.get_time_table(target_line.get('url'))
-                    # cache.update({line_number: time_table_data})
+                    cache.update({line_number: time_table_data})
                     result = time_table_data
                 else:
                     result = {'error': 'Line data not found.'}
