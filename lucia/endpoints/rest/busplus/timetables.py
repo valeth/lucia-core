@@ -42,15 +42,11 @@ def load_rest_endpoint(core):
             return row_list
 
         @staticmethod
-        def parse_title(heads: list, index: int):
-            loop_index = 0
-            line_title = None
-            for head in heads:
-                if loop_index == index:
-                    line_title = head[0][0][0].text
-                    break
-                loop_index += 1
-            return line_title
+        def parse_title(head):
+            line_title_split = head.text_content().strip().split('\n')
+            line_title_one = line_title_split[0].strip()
+            line_title_two = line_title_split[1][2:].strip()
+            return [line_title_one, line_title_two]
 
         @staticmethod
         def parse_slices(slices: list):
@@ -76,18 +72,15 @@ def load_rest_endpoint(core):
             time_html = requests.get(page_url, headers=headers).text
             root = lx.fromstring(time_html)
             table_elems = root.cssselect('.row-hover')
-            time_indexes = [(1, 8), (3, 32)]
             loop_index = 0
             time_data = []
-            line_title_heads = root.cssselect('.wpb_wrapper')
+            line_title_heads = root.cssselect('.wpb_wrapper')[8]
             for element in table_elems:
-                for time_index, title_index in time_indexes:
-                    if loop_index == time_index:
-                        line_title = self.parse_title(line_title_heads, title_index)
-                        time_slices = self.parse_time(element)
-                        parsed_slices = self.parse_slices(time_slices)
-                        slice_data = {'terminus': line_title, 'times': parsed_slices}
-                        time_data.append(slice_data)
+                line_title = self.parse_title(line_title_heads)[loop_index]
+                time_slices = self.parse_time(element)
+                parsed_slices = self.parse_slices(time_slices)
+                slice_data = {'terminus': line_title, 'times': parsed_slices}
+                time_data.append(slice_data)
                 loop_index += 1
             return time_data
 
