@@ -25,9 +25,10 @@ def load_rest_endpoint(core):
             line_url = None
             line_buttons = root.cssselect('.vc_btn3')
             for line_button in line_buttons:
-                if line_button.text.lower() == line_number.lower():
-                    line_url = f'{url_base}{line_button.attrib.get("href")}'
-                    break
+                if line_button:
+                    if line_button.text.lower() == line_number.lower():
+                        line_url = f'{url_base}{line_button.attrib.get("href")}'
+                        break
             return line_url
 
         @staticmethod
