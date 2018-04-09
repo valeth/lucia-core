@@ -11,18 +11,24 @@ cache = {}
 
 
 def load_rest_endpoint(core):
-    location = '/rest/bus/times/<int:line_number>'
+    location = '/rest/bus/times/<string:line_number>'
 
     class TimeTablesEndpoint(Resource):
         def __init__(self):
             self.core = core
 
         @staticmethod
-        def get_search_html(lookup: int):
-            search_post = 'https://www.busevi.com/wp-admin/admin-ajax.php'
-            search_content = f'action=ajaxsearchlite_search&aslp={lookup}&asid=1&options=qtranslate_lang%3D0%26'
-            search_content += 'set_intitle%3DNone%26set_incontent%3DNone%26customset%255B%255D%3Dportfolio'
-            return requests.post(search_post, headers=headers, data=search_content)
+        def get_line_url(line_number: str):
+            url_base = 'https://www.busevi.com'
+            home_html = requests.get(url_base).text
+            root = lx.fromstring(home_html)
+            line_url = None
+            line_buttons = root.cssselect('.vc_btn3')
+            for line_button in line_buttons:
+                if line_button.text.lower() == line_number.lower():
+                    line_url = f'{url_base}{line_button.attrib.get("href")}'
+                    break
+            return line_url
 
         @staticmethod
         def parse_time(element):
@@ -106,18 +112,16 @@ def load_rest_endpoint(core):
                     break
             return result
 
-        def get(self, line_number: int):
+        def get(self, line_number: str):
             target_cache = cache.get(line_number)
             if target_cache:
                 result = target_cache
             else:
-                search_results_html = self.get_search_html(line_number)
-                line_results = self.parse_lines(search_results_html.text)
-                target_line = self.get_correct(line_number, line_results)
+                target_line = self.get_line_url(line_number)
                 if target_line:
-                    time_table_data = self.get_time_table(target_line.get('url'))
+                    time_table_data = self.get_time_table(target_line)
                     cache.update({line_number: time_table_data})
-                    result = time_table_data
+                    result = time_table_data or {'error': 'Line data not found.'}
                 else:
                     result = {'error': 'Line data not found.'}
             return result
