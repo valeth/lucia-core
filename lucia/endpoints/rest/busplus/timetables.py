@@ -53,10 +53,10 @@ def load_rest_endpoint(core):
             slice_list = []
             for slice_piece in slices:
                 slice_data = {}
-                slice_hour = slice_piece[0]
-                regular_minutes = slice_piece[1].split()
-                saturday_minutes = slice_piece[2].split()
-                sunday_minutes = slice_piece[3].split()
+                slice_hour = int(slice_piece[0])
+                regular_minutes = [int(minutes) for minutes in slice_piece[1].split()]
+                saturday_minutes = [int(minutes) for minutes in slice_piece[2].split()]
+                sunday_minutes = [int(minutes) for minutes in slice_piece[3].split()]
                 slice_data.update(
                     {
                         'hour': slice_hour,
