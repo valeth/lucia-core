@@ -72,6 +72,9 @@ def load_rest_endpoint(core):
             time_html = requests.get(page_url, headers=headers).text
             root = lx.fromstring(time_html)
             table_elems = root.cssselect('.row-hover')
+            table_elem_index_one = int((len(table_elems) / 2)) - 1
+            table_elem_index_two = len(table_elems) - 1
+            table_elems = [table_elems[table_elem_index_one], table_elems[table_elem_index_two]]
             loop_index = 0
             time_data = []
             line_title_heads = root.cssselect('.wpb_wrapper')[8]
