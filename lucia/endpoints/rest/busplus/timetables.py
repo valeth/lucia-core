@@ -45,7 +45,7 @@ def load_rest_endpoint(core):
         def parse_title(head):
             line_title_split = head.text_content().strip().split('\n')
             line_title_one = line_title_split[0].strip()
-            line_title_two = line_title_split[1][2:].strip()
+            line_title_two = line_title_split[-1][2:].strip()
             return [line_title_one, line_title_two]
 
         @staticmethod
