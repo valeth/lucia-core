@@ -84,7 +84,10 @@ def load_rest_endpoint(core):
             return process.stdout.decode('utf-8')
 
         def get(self):
-            service_names = ['sigma', 'sigmamusic', 'apdata', 'elastic', 'kibana', 'nginx', 'mongod']
+            service_names = [
+                'sigma', 'sigmamusic', 'apdata', 'elastic',
+                'kibana', 'nginx', 'mongod', 'fail2ban', 'networking'
+            ]
             service_data = []
             for service_name in service_names:
                 service_response = self.get_systemctl_status(service_name)
