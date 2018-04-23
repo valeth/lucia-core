@@ -67,7 +67,7 @@ def load_rest_endpoint(core):
             service_name, service_description = resp_lines[0].split(' - ')
             service_pid, service_exe = self.get_process(resp_lines)
             info = {
-                'name': service_name[2:],
+                'name': service_name[2:].split('.')[0],
                 'desc': service_description,
                 'status': self.get_status(resp_lines),
                 'pid': service_pid,
