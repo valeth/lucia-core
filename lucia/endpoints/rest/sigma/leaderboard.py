@@ -94,6 +94,7 @@ def load_rest_endpoint(core):
                     value = doc.get(sort_key)
                     curr_level = int(value / leveler)
                     next_level_req = int((curr_level + 1) * leveler)
+                    next_level_req = next_level_req if next_level_req != value else next_level_req - 1
                     next_level_perc = round(((leveler - (next_level_req - value)) / leveler) * 100, 2)
                     tier, title = self.get_title(curr_level, prefixes, suffixes)
                     outlist.append(
