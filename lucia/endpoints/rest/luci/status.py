@@ -86,7 +86,7 @@ def load_rest_endpoint(core):
         def get(self):
             service_names = [
                 'sigma', 'sigmamusic', 'apdata', 'elastic',
-                'kibana', 'nginx', 'mongod', 'fail2ban', 'networking'
+                'kibana', 'nginx', 'mongod', 'fail2ban'
             ]
             service_data = []
             for service_name in service_names:
