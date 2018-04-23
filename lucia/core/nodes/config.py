@@ -10,9 +10,9 @@ class FlaskConfig(object):
         self.raw = data
         self.host = self.raw.get('host') or '127.0.0.1'
         self.port = self.raw.get('port') or 8080
-        self.debug = self.raw.get('debug')
+        self.debug = self.raw.get('debug') or True
         self.secret = self.raw.get('secret') or secrets.token_hex(4)
-        self.sigma = self.raw.get('sigma')
+        self.sigma = self.raw.get('sigma') or '../apex-sigma-core'
         self.cors = self.raw.get('cors') or []
         self.token = self.raw.get('token') or 'no_token'
         print(self.debug)
@@ -24,8 +24,8 @@ class MongoConfig(object):
         self.host = self.raw.get('host') or '127.0.0.1'
         self.port = self.raw.get('port') or 27017
         self.auth = self.raw.get('auth') or False
-        self.user = self.raw.get('user')
-        self.pasw = self.raw.get('pasw')
+        self.user = self.raw.get('user') or 'user'
+        self.pasw = self.raw.get('pasw') or 'pass'
 
 
 class Configuration(object):
