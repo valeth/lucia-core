@@ -37,9 +37,7 @@ def load_rest_endpoint(core):
             for row in element:
                 text_list = []
                 for column in row:
-                    coll_text = column.text.strip() if column.text else None
-                    if coll_text:
-                        text_list.append(coll_text)
+                    text_list.append(column.text.strip() if column.text else None)
                 row_list.append(text_list)
             return row_list
 
@@ -56,9 +54,18 @@ def load_rest_endpoint(core):
             for slice_piece in slices:
                 slice_data = {}
                 slice_hour = int(slice_piece[0])
-                regular_minutes = [int(minutes) for minutes in slice_piece[1].split()]
-                saturday_minutes = [int(minutes) for minutes in slice_piece[2].split()]
-                sunday_minutes = [int(minutes) for minutes in slice_piece[3].split()]
+                try:
+                    regular_minutes = [int(minutes) for minutes in slice_piece[1].split()]
+                except (IndexError, AttributeError):
+                    regular_minutes = []
+                try:
+                    saturday_minutes = [int(minutes) for minutes in slice_piece[2].split()]
+                except (IndexError, AttributeError):
+                    saturday_minutes = []
+                try:
+                    sunday_minutes = [int(minutes) for minutes in slice_piece[3].split()]
+                except (IndexError, AttributeError):
+                    sunday_minutes = []
                 slice_data.update(
                     {
                         'hour': slice_hour,
