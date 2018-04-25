@@ -37,7 +37,9 @@ def load_rest_endpoint(core):
             for row in element:
                 text_list = []
                 for column in row:
-                    text_list.append(column.text.strip())
+                    coll_text = column.text.strip() if column.text else None
+                    if coll_text:
+                        text_list.append(coll_text)
                 row_list.append(text_list)
             return row_list
 
