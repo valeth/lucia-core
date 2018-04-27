@@ -2,9 +2,9 @@ import asyncio
 
 import arrow
 import flask
-import flask_socketio
 import flask_cors
 import flask_restful
+import flask_socketio
 
 from lucia.core.nodes.config import Configuration
 from lucia.core.nodes.database import Database

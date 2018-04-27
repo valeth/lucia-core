@@ -1,14 +1,6 @@
 import subprocess
-from flask_restful import Resource
 
-example_response = """
-● sigma.service - Sigma The Database Giant
-   Active: active (running) since Sat 2018-04-21 10:04:41 CEST; 2 days ago
- Main PID: 2707 (python3.6)
-    Tasks: 70
-   Memory: 1.8G
-      CPU: 1d 18h 41min 471ms
-"""
+from flask_restful import Resource
 
 
 def load_rest_endpoint(core):
