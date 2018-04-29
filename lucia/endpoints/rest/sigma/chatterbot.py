@@ -14,7 +14,8 @@ def load_rest_endpoint(core):
                 database='chatterbot',
                 read_only=True,
                 database_uri=core.db.db_address,
-                storage_adapter='chatterbot.storage.MongoDatabaseAdapter'
+                storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
+                output_format='text'
             )
 
         def post(self):
@@ -23,7 +24,9 @@ def load_rest_endpoint(core):
                 interaction = req_data.get('interaction')
                 conversation = req_data.get('conversation')
                 if interaction and conversation:
-                    response = self.cb.get_response(interaction, conversation_id=conversation)
+                    interaction = self.cb.input.process_input_statement(interaction)
+                    _, response = self.cb.generate_response(interaction, conversation)
+                    self.cb.output.process_response(response)
                     data = {'response': str(response)}
                 else:
                     data = {'error': 'Missing data arguments.'}
