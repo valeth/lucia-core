@@ -20,11 +20,12 @@ def load_rest_endpoint(core):
             req_data = request.get_json()
             if req_data:
                 interaction = req_data.get('interaction')
-                if interaction:
-                    response = self.cb.get_response(interaction)
+                conversation = req_data.get('conversation')
+                if interaction and conversation:
+                    response = self.cb.get_response(interaction, conversation_id=conversation)
                     data = {'response': str(response)}
                 else:
-                    data = {'error': 'No interaction data.'}
+                    data = {'error': 'Missing data arguments.'}
             else:
                 data = {'error': 'No request data.'}
             return data
