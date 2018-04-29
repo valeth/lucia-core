@@ -12,6 +12,7 @@ def load_rest_endpoint(core):
             self.cb = ChatBot(
                 "Sigma",
                 database='chatterbot',
+                read_only=True,
                 database_uri=core.db.db_address,
                 storage_adapter='chatterbot.storage.MongoDatabaseAdapter'
             )
