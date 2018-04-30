@@ -35,7 +35,12 @@ def load_rest_endpoint(core):
                 'statistics': 'bar-chart-2',
                 'mathematics': 'hash',
                 'miscellaneous': 'command',
-                'logging': 'shield'
+                'logging': 'shield',
+                'league of legends': 'league',
+                'path of exile': 'sword',
+                'overwatch': 'overwatch',
+                'warframe': 'warframe',
+                'osu': 'osu'
             }
 
         def load_commands(self):
