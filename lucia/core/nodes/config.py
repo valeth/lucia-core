@@ -10,7 +10,7 @@ class FlaskConfig(object):
         self.raw = data
         self.host = self.raw.get('host') or '127.0.0.1'
         self.port = self.raw.get('port') or 8080
-        self.debug = self.raw.get('debug') or True
+        self.debug = self.raw.get('debug')
         self.secret = self.raw.get('secret') or secrets.token_hex(4)
         self.sigma = self.raw.get('sigma') or '../apex-sigma-core'
         self.cors = self.raw.get('cors') or []
