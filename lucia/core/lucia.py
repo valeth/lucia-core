@@ -23,6 +23,9 @@ class LuciaCore(object):
         self.webs = flask_socketio.SocketIO(self.flask)
         self.loader = EndpointLoader(self)
 
+    def __call__(self, *args, **kwargs):
+        self.flask.__call__(*args, **kwargs)
+
     def run(self):
         print('--------------------------------')
         print('Starting Up Lucia\'s Endpoint!')
