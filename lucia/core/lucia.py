@@ -24,7 +24,7 @@ class LuciaCore(object):
         self.loader = EndpointLoader(self)
 
     def __call__(self, *args, **kwargs):
-        self.flask.__call__(*args, **kwargs)
+        self.rest.__call__(*args, **kwargs)
 
     def run(self):
         print('--------------------------------')
