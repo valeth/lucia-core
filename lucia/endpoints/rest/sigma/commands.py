@@ -37,7 +37,7 @@ def load_rest_endpoint(core):
                 'miscellaneous': 'command',
                 'logging': 'shield',
                 'league of legends': 'league',
-                'path of exile': 'sword',
+                'path_of_exile': 'sword',
                 'overwatch': 'overwatch',
                 'warframe': 'warframe',
                 'osu': 'osu'
@@ -109,7 +109,7 @@ def load_rest_endpoint(core):
                     if mkey == 'nsfw':
                         name = mkey.upper()
                     else:
-                        name = mkey.title()
+                        name = mkey.title().replace('_', ' ')
                     mdl_data = {
                         'name': name,
                         'icon': icon,
