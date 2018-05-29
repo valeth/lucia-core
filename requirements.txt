@@ -5,7 +5,6 @@ arrow
 https://github.com/Rapptz/discord.py/archive/rewrite.zip#egg=discord.py[voice]
 eventlet
 flask
-flask-cors
 flask_restful
 flask-socketio
 gevent

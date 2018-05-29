@@ -2,7 +2,6 @@ import asyncio
 
 import arrow
 import flask
-import flask_cors
 import flask_restful
 import flask_socketio
 
@@ -27,5 +26,4 @@ class LuciaCore(flask.Flask):
         print('--------------------------------')
         print('Starting Up Lucia\'s Endpoint!')
         print('--------------------------------')
-        flask_cors.CORS(self)
         super().run(self.cfg.app.host, self.cfg.app.port, debug=self.cfg.app.debug)
