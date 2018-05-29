@@ -13,7 +13,6 @@ class FlaskConfig(object):
         self.debug = self.raw.get('debug')
         self.secret = self.raw.get('secret') or secrets.token_hex(4)
         self.sigma = self.raw.get('sigma') or '../apex-sigma-core'
-        self.cors = self.raw.get('cors') or []
         self.token = self.raw.get('token') or 'no_token'
         print(self.debug)
 
