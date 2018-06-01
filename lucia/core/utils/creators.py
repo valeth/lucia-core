@@ -9,7 +9,6 @@ def make_usr_def_data(uid):
 
 
 def make_compat_data(data):
-    data = data.get('user')
     user_id = data.get('id')
     avatar_id = data.get('avatar')
     avatar_url = 'https://i.imgur.com/QnYSlld.png'

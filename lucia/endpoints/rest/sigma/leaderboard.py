@@ -77,6 +77,7 @@ def load_rest_endpoint(core):
             board_data = self.board_data.get(board) or {}
             collection = board_data.get('coll')
             sort_key = board_data.get('sort')
+            self.core.clean_user_cache()
             if collection and sort_key:
                 title_pieces = board_data.get('names')
                 prefixes = title_pieces.get('pre')
@@ -86,7 +87,7 @@ def load_rest_endpoint(core):
                 outlist = []
                 for doc in all_docs:
                     uid = doc.get('UserID')
-                    user_data = get_user(self.core.cfg.app.token, uid)
+                    user_data = get_user(self.core.db, self.core.cfg.app.token, uid)
                     if user_data:
                         user_data = make_compat_data(user_data)
                     else:

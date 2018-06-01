@@ -21,6 +21,10 @@ class LuciaCore(flask.Flask):
         self.rest = flask_restful.Api(self)
         self.webs = flask_socketio.SocketIO(self)
         self.loader = EndpointLoader(self)
+        self.clean_user_cache()
+
+    def clean_user_cache(self):
+        self.db.lucia.UserCache.delete_many({'Time': {'$lt': arrow.utcnow().timestamp - 86400}})
 
     def run(self, *args):
         print('--------------------------------')

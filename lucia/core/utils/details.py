@@ -3,13 +3,12 @@ import time
 import arrow
 import requests
 
-guild_cache = {}
 
-
-def get_user(token, user_id):
-    cached_user = guild_cache.get(user_id)
+def get_user(db, token, user_id):
+    lookup = {'UserID': user_id}
+    cached_user = db.lucia.UserCache.find_one(lookup)
     if cached_user:
-        if cached_user.get('stamp') + 21600 < arrow.utcnow().float_timestamp:
+        if cached_user.get('Time') + 86400 < arrow.utcnow().timestamp:
             need_fresh = True
         else:
             need_fresh = False
@@ -24,6 +23,11 @@ def get_user(token, user_id):
             user_data = user_data_req.json()
         else:
             user_data = None
-        cache_data = {'user': user_data, 'stamp': arrow.utcnow().float_timestamp}
-        guild_cache.update({user_id: cache_data})
-    return guild_cache.get(user_id)
+        cache_data = {'UserID': user_id, 'Data': user_data, 'Time': arrow.utcnow().timestamp}
+        if cached_user is None:
+            db.lucia.UserCache.insert_one(cache_data)
+        else:
+            db.lucia.UserCache.update_one(lookup, {'$set': cache_data})
+    else:
+        user_data = cached_user.get('Data')
+    return user_data
