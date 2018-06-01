@@ -7,8 +7,6 @@ headers = {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 }
 
-cache = {}
-
 
 def load_rest_endpoint(core):
     location = '/rest/bus/times/<string:line_number>'
@@ -119,14 +117,19 @@ def load_rest_endpoint(core):
             return result
 
         def get(self, line_number: str):
-            target_cache = cache.get(line_number)
+            target_cache = self.core.db.lucia.BusPlusCache.find_one({'Line': line_number})
             if target_cache:
+                target_cache.pop('_id')
                 result = target_cache
             else:
                 target_line = self.get_line_url(line_number)
                 if target_line:
                     time_table_data = self.get_time_table(target_line)
-                    cache.update({line_number: time_table_data})
+                    line_data = {'Line': line_number, 'Timetable': time_table_data}
+                    if target_cache is None:
+                        self.core.db.lucia.BusPlusCache.insert_one(line_data)
+                    else:
+                        self.core.db.lucia.BusPlusCache.update_one({'Line': line_number}, {'$set': line_data})
                     result = time_table_data or {'error': 'Line data not found.'}
                 else:
                     result = {'error': 'Line data not found.'}
