@@ -31,6 +31,15 @@ module LuciaCore
         Rails.root.join("../apex-sigma")
       end
 
+    sigma_token = ENV["DISCORD_BOT_TOKEN"]
+    config.x.sigma_token =
+      if sigma_token.blank?
+        yml = config.x.sigma_path.join("config/core/discord.yml")
+        YAML.safe_load(yml.read)["token"]
+      else
+        sigma_token
+      end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
