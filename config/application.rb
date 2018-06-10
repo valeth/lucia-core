@@ -28,7 +28,7 @@ module LuciaCore
       if sigma_path
         Pathname.new(sigma_path).expand_path
       else
-        Rails.root.join("../apex-sigma-core")
+        Rails.root.join("../apex-sigma")
       end
 
     # Settings in config/environments/* take precedence over those specified here.
