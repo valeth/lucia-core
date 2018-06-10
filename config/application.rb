@@ -23,6 +23,14 @@ module LuciaCore
 
     config.autoload_paths << Rails.root.join("lib")
 
+    sigma_path = ENV["SIGMA_PATH"]
+    config.x.sigma_path =
+      if sigma_path
+        Pathname.new(sigma_path).expand_path
+      else
+        Rails.root.join("../apex-sigma-core")
+      end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

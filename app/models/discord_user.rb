@@ -31,13 +31,13 @@ class DiscordUser
     timestamp.next_day < Time.now
   end
 
-  def avatar_url
+  def avatar_url(fallback: "https://i.imgur.com/QnYSlld.png")
     aid = data["avatar"]
     if aid
       ext = aid.start_with?("a_") ? ".gif" : ".png"
       "https://cdn.discordapp.com/avatars/#{uid}/#{aid}#{ext}"
     else
-      "https://i.imgur.com/QnYSlld.png"
+      fallback
     end
   end
 
@@ -45,8 +45,8 @@ class DiscordUser
     data.fetch("discriminator", nil)
   end
 
-  def name
-    data.fetch("username", "{Unknown}")
+  def name(fallback: "{Unknown}")
+    data.fetch("username", fallback)
   end
 
   def make_data
