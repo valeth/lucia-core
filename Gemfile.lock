@@ -102,6 +102,8 @@ GEM
       pry (>= 0.10.4)
     puma (3.11.4)
     rack (2.0.5)
+    rack-handlers (0.7.3)
+      rack
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rails (5.1.6)
@@ -185,6 +187,7 @@ DEPENDENCIES
   mongoid (~> 7.0.1)
   pry-rails
   puma (~> 3.7)
+  rack-handlers
   rails (~> 5.1.6)
   rest-client
   rubocop (= 0.57.1)

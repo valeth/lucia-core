@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-unset CDPATH
-working_directory="$(cd "$(dirname "$0")/.." && pwd)"
-exec unicorn --config-file "$working_directory/config/unicorn.config.rb"

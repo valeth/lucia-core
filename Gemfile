@@ -1,7 +1,6 @@
 source "https://rubygems.org"
 
 # -------[ Core ]-------
-
 gem "rails", "~> 5.1.6"
 gem "puma", "~> 3.7"
 gem "dotenv-rails", "~> 2.2"
@@ -26,6 +25,7 @@ group :development do
 end
 
 group :production do
+  gem "rack-handlers"
   gem "unicorn"
 end
 
