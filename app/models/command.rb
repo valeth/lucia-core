@@ -6,7 +6,7 @@ class Command
   def initialize(cmd, category)
     @name = cmd["name"]
     @attributes = {
-      desc: cmd["description"],
+      desc: cmd.fetch("description", ""),
       usage: define_usage(cmd),
       category: category,
       names: {
@@ -26,7 +26,22 @@ class Command
     !@attributes.fetch(:nsfw, false)
   end
 
+  def matches?(**criteria)
+    criteria.map { |k, v| send("matches_#{k}?", v) }.all?
+  end
+
 private
+
+  def matches_name?(search)
+    [
+      @attributes.dig(:names, :primary).downcase.include?(search.downcase),
+      @attributes.dig(:names, :alts)&.any? { |x| x.downcase.include?(search.downcase) }
+    ].any?
+  end
+
+  def matches_desc?(search)
+    @attributes[:desc].downcase.include?(search.downcase)
+  end
 
   def define_usage(cmd, prefix: ">>")
     if cmd["usage"].present?

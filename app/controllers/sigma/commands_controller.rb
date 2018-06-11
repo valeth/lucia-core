@@ -8,6 +8,13 @@ module Sigma
 
     def index
       @categories = categorized_commands
+
+      search_filter = commands_parameters[:filter]
+      if search_filter.present?
+        @categories
+          .map! { |c| c.filter_commands(search_filter) }
+          .select!(&:commands_available?)
+      end
     end
 
   private
@@ -25,6 +32,10 @@ module Sigma
         .select(&:commands_available?)
     rescue SystemCallError, YAML::Exception
       raise CommandsError, "Failed to read module configuration"
+    end
+
+    def commands_parameters
+      params.permit(filter: [:name, :desc])
     end
   end
 end

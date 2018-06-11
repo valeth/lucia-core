@@ -52,4 +52,14 @@ class CommandCategory
   def icon
     ICONS[@name]
   end
+
+  def filter_commands(criteria)
+    return self unless criteria.respond_to?(:to_h)
+    filtered = self.class.new(@name, [])
+    filtered_commands = @commands.select do |cmd|
+      cmd.matches?(criteria.to_h.symbolize_keys)
+    end
+    filtered.instance_variable_set(:@commands, filtered_commands)
+    filtered
+  end
 end
