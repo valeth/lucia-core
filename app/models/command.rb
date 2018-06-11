@@ -30,7 +30,7 @@ private
 
   def define_usage(cmd, prefix: ">>")
     if cmd["usage"].present?
-      cmd["usage"]&.sub("{pfx}", prefix)&.sub("{cmd}", @name),
+      cmd["usage"]&.sub("{pfx}", prefix)&.sub("{cmd}", @name)
     else
       "#{prefix}#{@name}"
     end
