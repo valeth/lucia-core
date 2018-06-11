@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       end
 
       scope :bus do
-        get 'times', to: "busplus#show"
+        get "times", to: "busplus#show"
       end
     end
   end

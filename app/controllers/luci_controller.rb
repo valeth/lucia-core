@@ -11,7 +11,7 @@ class LuciController < ApplicationController
 
   def show
     @services = SERVICES
-      .map { |s| ServiceStatus.new(s) }
-      .select(&:available?)
+                .map { |s| ServiceStatus.new(s) }
+                .select(&:available?)
   end
 end

@@ -7,11 +7,7 @@ AllCops:
   Exclude:
     - "bin/**/*"
     - "cache/**/*"
-    - "config/**/*"
     - "vendor/**/*"
-    - "Gemfile"
-    - "Rakefile"
-    - "config.ru"
 
 
 # -------[ Layout ]-------
@@ -121,10 +117,16 @@ Style/Documentation:
 # -------[ Metrics ]-------
 
 Metrics/LineLength:
-  Max: 100
+  Max: 120
 
 Metrics/MethodLength:
   Max: 20
 
 Metrics/AbcSize:
+  Enabled: false
+
+
+# -------[ Bundler ]------
+
+Bundler/OrderedGems:
   Enabled: false

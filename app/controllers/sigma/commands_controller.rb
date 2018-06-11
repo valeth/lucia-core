@@ -20,9 +20,9 @@ module Sigma
       module_list
         .map { |f| YAML.load_file(f) }
         .reject { |x| x["category"].nil? }
-        .group_by { |x| x["category"]}
+        .group_by { |x| x["category"] }
         .map { |catname, cat| CommandCategory.new(catname, cat) }
-        .select(&:has_commands?)
+        .select(&:commands_available?)
     rescue SystemCallError, YAML::Exception
       raise CommandsError, "Failed to read module configuration"
     end

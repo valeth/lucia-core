@@ -18,7 +18,7 @@ module Sigma
         when "currency" then CurrencySystem
         when "experience" then ExperienceSystem
         when "cookies" then Cookie
-        else raise InvalidLeaderboard, %{No leaderboard named "#{board}"}
+        else raise InvalidLeaderboard, %(No leaderboard named "#{board}")
         end
       res.all.sort(score: -1).limit(20) if res
     end

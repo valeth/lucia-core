@@ -15,7 +15,7 @@ class Command
       }
     }
 
-    set_permissions(cmd["permissions"])
+    permissions(cmd["permissions"])
 
     @attributes.each_key do |key|
       define_singleton_method(key) { @attributes[key] }
@@ -28,7 +28,7 @@ class Command
 
 private
 
-  def set_permissions(perms)
+  def permissions(perms)
     if perms
       ABILITIES.each do |ability|
         @attributes[ability] = perms.fetch(ability.to_s, false)
