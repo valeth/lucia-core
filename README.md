@@ -1,24 +1,15 @@
-# README
+# Lucia's Cipher API backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Lucia's Cipher's main REST API endpoint.
 
-Things you may want to cover:
+## Requirements
+* Ruby >= 2.5
+* MongoDB >= 3
 
-* Ruby version
+## Setup (Deployment)
+Run `bundle install --deployment` to install all necessary gems.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Then there are multiple options to run this app:
+- directly with `rails server`
+- via an application server, like `Phusion Passenger`
+- with `unicorn`
