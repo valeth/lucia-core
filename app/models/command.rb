@@ -7,7 +7,7 @@ class Command
     @name = cmd["name"]
     @attributes = {
       desc: cmd["description"],
-      usage: cmd["usage"]&.sub("{pfx}", ">>")&.sub("{cmd}", @name),
+      usage: usage(cmd),
       category: category,
       names: {
         primary: @name,
@@ -27,6 +27,14 @@ class Command
   end
 
 private
+
+  def define_usage(cmd, prefix: ">>")
+    if cmd["usage"].present?
+      cmd["usage"]&.sub("{pfx}", prefix)&.sub("{cmd}", @name),
+    else
+      "#{prefix}#{@name}"
+    end
+  end
 
   def permissions(perms)
     if perms
