@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_dependency "discord_user_fetcher"
+
 class DiscordUser
   include Mongoid::Document
 

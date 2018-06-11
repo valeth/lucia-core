@@ -1,4 +1,4 @@
-json.leaderboards @scores do |s|
+json.leaderboard @scores do |s|
   json.user s.user_data
 
   json.value s.score
