@@ -1,0 +1,132 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: false
+  StyleGuideCopsOnly: false
+  TargetRubyVersion: 2.4
+  TargetRailsVersion: 5.1
+  Exclude:
+    - "bin/**/*"
+    - "cache/**/*"
+    - "vendor/**/*"
+
+
+# -------[ Layout ]-------
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: variable
+
+Layout/CaseIndentation:
+  Enabled: true
+
+Layout/CommentIndentation:
+  Enabled: true
+
+Layout/EmptyLines:
+  Enabled: true
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/SpaceAfterColon:
+  Enabled: true
+
+Layout/SpaceAfterComma:
+  Enabled: true
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+
+Layout/SpaceAroundOperators:
+  Enabled: true
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Layout/SpaceInsideParens:
+  Enabled: true
+
+Layout/Tab:
+  Enabled: true
+
+Layout/TrailingBlankLines:
+  Enabled: true
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+
+# -------[ Lint ]-------
+
+Lint/RequireParentheses:
+  Enabled: true
+
+
+# -------[ Style ]-------
+
+Style/AndOr:
+  Enabled: true
+
+Style/BracesAroundHashParameters:
+  Enabled: true
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: true
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/MethodDefParentheses:
+  Enabled: true
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/UnneededPercentQ:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+
+# -------[ Metrics ]-------
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Enabled: false
+
+
+# -------[ Bundler ]------
+
+Bundler/OrderedGems:
+  Enabled: false
