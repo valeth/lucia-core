@@ -6,7 +6,7 @@ worker_processes ENV.fetch("UNICORN_WORKERS") { `nproc`&.to_i || 4 }
 
 listen ENV.fetch("UNICORN_PORT") { 8080 }
 
-socket_dir = Pathname.new(ENV["XDG_RUNTIME_DIR"] || ENV["TMPDIR"] || Dir.tmpdir).join("lucia_core")
+socket_dir = Pathname.new(ENV["TMPDIR"] || Dir.tmpdir).join("lucia_core")
 socket_dir.mkpath
 listen socket_dir.join("unicorn.sock").to_s
 
