@@ -7,7 +7,7 @@ class Command
     @name = cmd["name"]
     @attributes = {
       desc: cmd["description"],
-      usage: usage(cmd),
+      usage: define_usage(cmd),
       category: category,
       names: {
         primary: @name,
