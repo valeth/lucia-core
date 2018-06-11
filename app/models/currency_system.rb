@@ -26,6 +26,6 @@ private
   end
 
   def leveler
-    @leveler ||= 1133.55
+    @leveler ||= 7537.0
   end
 end
