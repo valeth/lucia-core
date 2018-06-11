@@ -4,7 +4,7 @@ class LuciController < ApplicationController
   SERVICES = %i[
     sigma
     sigmamusic
-    apdata
+    lucia-core
     nginx
     mongod
   ].freeze
