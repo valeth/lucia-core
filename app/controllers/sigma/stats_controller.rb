@@ -1,7 +1,18 @@
 module Sigma
   class StatsController < ApplicationController
     def index
-      render json: {}
+      @stats = stats
+    end
+
+  private
+
+    def stats
+      {
+        commands: CommandStatistic.all,
+        events: EventStatistic.all,
+        general: GeneralStatistic.where(name: :population).first,
+        special: SpecialStatistic.all
+      }
     end
   end
 end
