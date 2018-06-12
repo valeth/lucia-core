@@ -1,30 +1,21 @@
 # frozen_string_literal: true
 
 class Command
-  ABILITIES = %i[admin partner nsfw].freeze
+  include Mongoid::Document
 
-  def initialize(cmd, category)
-    @name = cmd["name"]
-    @attributes = {
-      desc: cmd.fetch("description", ""),
-      usage: define_usage(cmd),
-      category: category,
-      names: {
-        primary: @name,
-        alts: cmd["alts"]
-      }
-    }
+  store_in collection: "BotCommands"
 
-    permissions(cmd["permissions"])
+  field :name, type: String
+  field :desc, type: String, default: ""
+  field :alts, type: Array, default: []
+  field :usage, type: String, default: -> { ">>#{name}" }
+  field :nsfw, type: Boolean, default: false
+  field :partner, type: Boolean, default: false
+  field :admin, type: Boolean, default: false
 
-    @attributes.each_key do |key|
-      define_singleton_method(key) { @attributes[key] }
-    end
-  end
+  belongs_to :category, class_name: "CommandCategory"
 
-  def sfw
-    !@attributes.fetch(:nsfw, false)
-  end
+  validates :name, presence: true, uniqueness: true
 
   def matches?(**criteria)
     criteria.map { |k, v| send("matches_#{k}?", v) }.all?
@@ -34,30 +25,12 @@ private
 
   def matches_name?(search)
     [
-      @attributes.dig(:names, :primary).downcase.include?(search.downcase),
-      @attributes.dig(:names, :alts)&.any? { |x| x.downcase.include?(search.downcase) }
+      name.downcase.include?(search.downcase),
+      alts.any? { |x| x.downcase.include?(search.downcase) }
     ].any?
   end
 
   def matches_desc?(search)
-    @attributes[:desc].downcase.include?(search.downcase)
-  end
-
-  def define_usage(cmd, prefix: ">>")
-    if cmd["usage"].present?
-      cmd["usage"]&.sub("{pfx}", prefix)&.sub("{cmd}", @name)
-    else
-      "#{prefix}#{@name}"
-    end
-  end
-
-  def permissions(perms)
-    if perms
-      ABILITIES.each do |ability|
-        @attributes[ability] = perms.fetch(ability.to_s, false)
-      end
-    else
-      ABILITIES.each { |a| @attributes[a] = false }
-    end
+    desc.downcase.include?(search.downcase)
   end
 end

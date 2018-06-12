@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sigma
   class CommandsController < ApplicationController
     CommandsError = Class.new(StandardError)
@@ -7,8 +9,7 @@ module Sigma
     end
 
     def index
-      @categories = categorized_commands
-
+      @categories = CommandCategory.all.sort(name: 1).select(&:commands_available?)
       search_filter = commands_parameters[:filter]
       return unless search_filter.present?
       @categories
@@ -17,22 +18,6 @@ module Sigma
     end
 
   private
-
-    def module_list
-      Rails.configuration.x.sigma_path.join("sigma/modules").glob("**/module.yml")
-    end
-
-    def categorized_commands
-      module_list
-        .map { |f| YAML.load_file(f) }
-        .reject { |x| x["category"].nil? }
-        .sort_by { |x| x["category"] }
-        .group_by { |x| x["category"] }
-        .map { |catname, cat| CommandCategory.new(catname, cat) }
-        .select(&:commands_available?)
-    rescue SystemCallError, YAML::Exception
-      raise CommandsError, "Failed to read module configuration"
-    end
 
     def commands_parameters
       params.permit(filter: [:name, :desc])

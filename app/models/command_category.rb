@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CommandCategory
+  include Mongoid::Document
+
   ICONS = {
     music: "music",
     minigames: "target",
@@ -31,36 +33,27 @@ class CommandCategory
     osu: "osu"
   }.freeze
 
-  attr_reader :commands
+  store_in collection: "BotCommandCategories"
 
-  def initialize(name, cat)
-    @name = name.to_sym
-    @commands = cat.sum([]) do |mod|
-      mod.fetch("commands", [])
-         .sort_by { |cmd| cmd["name"] }
-         .map { |cmd| Command.new(cmd, name) }
-    end
-  end
+  field :name, type: String
+  has_many :commands, class_name: "Command", dependent: :destroy
 
-  def name
-    @name.to_s.titleize
+  validates :name, presence: true, uniqueness: true
+
+  def icon
+    ICONS[name&.to_sym]
   end
 
   def commands_available?
-    @commands.present?
-  end
-
-  def icon
-    ICONS[@name]
+    commands.present?
   end
 
   def filter_commands(criteria)
     return self unless criteria.respond_to?(:to_h)
-    filtered = self.class.new(@name, [])
-    filtered_commands = @commands.select do |cmd|
-      cmd.matches?(criteria.to_h.symbolize_keys)
+    self.class.new(name: self[:name]).tap do |cat|
+      cat.commands = commands.select do |cmd|
+        cmd.matches?(criteria.to_h.symbolize_keys)
+      end
     end
-    filtered.instance_variable_set(:@commands, filtered_commands)
-    filtered
   end
 end
