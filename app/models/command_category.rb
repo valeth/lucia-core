@@ -35,9 +35,10 @@ class CommandCategory
 
   def initialize(name, cat)
     @name = name.to_sym
-    @commands = cat.reduce([]) do |acc, mod|
-      cmds = mod.fetch("commands", [])
-      acc + cmds.map { |cmd| Command.new(cmd, name) }
+    @commands = cat.sum([]) do |mod|
+      mod.fetch("commands", [])
+         .sort_by { |cmd| cmd["name"] }
+         .map { |cmd| Command.new(cmd, name) }
     end
   end
 

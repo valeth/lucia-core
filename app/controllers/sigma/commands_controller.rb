@@ -10,11 +10,10 @@ module Sigma
       @categories = categorized_commands
 
       search_filter = commands_parameters[:filter]
-      if search_filter.present?
-        @categories
-          .map! { |c| c.filter_commands(search_filter) }
-          .select!(&:commands_available?)
-      end
+      return unless search_filter.present?
+      @categories
+        .map! { |c| c.filter_commands(search_filter) }
+        .select!(&:commands_available?)
     end
 
   private
@@ -27,6 +26,7 @@ module Sigma
       module_list
         .map { |f| YAML.load_file(f) }
         .reject { |x| x["category"].nil? }
+        .sort_by { |x| x["category"] }
         .group_by { |x| x["category"] }
         .map { |catname, cat| CommandCategory.new(catname, cat) }
         .select(&:commands_available?)
