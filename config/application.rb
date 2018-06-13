@@ -25,6 +25,8 @@ module LuciaCore
 
     config.active_job.queue_adapter = :sidekiq
 
+    config.cache_store = :redis_store, ENV["REDIS_URL"], { expires_in: 1.day }
+
     sigma_path = ENV["SIGMA_PATH"]
     config.x.sigma_path =
       if sigma_path

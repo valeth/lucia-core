@@ -13,6 +13,12 @@ gem "mongoid", "~> 7.0.1"
 # -------[ Misc ]-------
 gem "rest-client"
 gem "jbuilder", "~> 2.7"
+gem "yajl-ruby"
+
+# -------[ Cache ]-------
+gem "hiredis"
+gem "redis", "~> 4.0", require: ["redis", "redis/connection/hiredis"]
+gem "redis-rails"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 

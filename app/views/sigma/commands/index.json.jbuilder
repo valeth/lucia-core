@@ -1,18 +1,11 @@
 json.array! @categories do |cat|
-  json.name cat.name.titleize
+  json.cache! ["v1", cat], expires_in: 5.minutes do
+    json.name cat.name.titleize
 
-  json.icon cat.icon
+    json.icon cat.icon
 
-  json.commands cat.commands do |cmd|
-    json.admin cmd.admin
-    json.category cmd.category.name
-    json.desc cmd.desc.present? ? cmd.desc : "No description"
-    json.names do
-      json.primary cmd.name
-      json.alts cmd.alts
+    json.commands do
+      json.partial! "sigma/commands/command", collection: cat.commands, as: :cmd
     end
-    json.partner cmd.partner
-    json.sfw !cmd.nsfw
-    json.usage cmd.usage
   end
 end
