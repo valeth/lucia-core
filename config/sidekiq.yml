@@ -1,6 +1,0 @@
-schedule:
-  fetch_commands:
-    class: FetchCommandsJob
-    every:
-      - 1d
-      - first_in: 1m
