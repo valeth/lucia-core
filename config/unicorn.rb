@@ -19,23 +19,24 @@ initialized = false
 before_fork do |server, worker|
   next if initialized
 
-  Thread.new do
-    require "childprocess"
-
-    ChildProcess.build("sidekiq").tap do |p|
-      p.io.inherit!
-      p.start
-      p.wait
-      p.close
+  if ENV.fetch("UNICORN_SIDEKIQ", false)
+    Thread.new do
+      require "childprocess"
+      ChildProcess.build("sidekiq").tap do |p|
+        p.io.inherit!
+        p.start
+        p.wait
+        p.close
+      end
+    rescue => e
+      raise e if environment == "development"
+      warn e.message
+      warn e.backtrace.join("\n")
+      exit 1
     end
   end
 
   initialized = true
-rescue => e
-  raise e if environment == "development"
-  warn e.message
-  warn e.backtrace.join("\n")
-  exit 1
 end
 
 worker_user = ENV.fetch("UNICORN_WORKER_USER") { Etc.getpwuid(Process.euid).name }
