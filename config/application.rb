@@ -23,6 +23,8 @@ module LuciaCore
 
     config.autoload_paths << Rails.root.join("lib")
 
+    config.active_job.queue_adapter = :sidekiq
+
     sigma_path = ENV["SIGMA_PATH"]
     config.x.sigma_path =
       if sigma_path

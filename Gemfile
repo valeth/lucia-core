@@ -13,6 +13,8 @@ gem "mongoid", "~> 7.0.1"
 # -------[ Misc ]-------
 gem "rest-client"
 gem "jbuilder", "~> 2.7"
+gem "sidekiq"
+gem "sidekiq-scheduler"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]

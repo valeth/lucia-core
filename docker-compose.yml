@@ -2,6 +2,7 @@ version: "3.2"
 
 volumes:
   mongodb:
+  redis:
 
 services:
   database:
@@ -10,3 +11,10 @@ services:
       - "27017:27017"
     volumes:
       - "mongodb:/data/db"
+
+  redis:
+    image: "redis:3-alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis:/data"
