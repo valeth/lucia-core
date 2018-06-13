@@ -14,6 +14,30 @@ preload_app true
 
 timeout 30
 
+initialized = false
+
+before_fork do |server, worker|
+  next if initialized
+
+  Thread.new do
+    require "childprocess"
+
+    ChildProcess.build("sidekiq").tap do |p|
+      p.io.inherit!
+      p.start
+      p.wait
+      p.close
+    end
+  end
+
+  initialized = true
+rescue => e
+  raise e if environment == "development"
+  warn e.message
+  warn e.backtrace.join("\n")
+  exit 1
+end
+
 worker_user = ENV.fetch("UNICORN_WORKER_USER") { Etc.getpwuid(Process.euid).name }
 worker_group = ENV.fetch("UNICORN_WORKER_GROUP") { Etc.getgrgid(Process.egid).name }
 
@@ -29,9 +53,6 @@ after_fork do |server, worker|
     Process::UID.change_privilege(target_uid)
   end
 rescue => e
-  if environment == "development"
-    $stderr.puts "Failed to change user"
-  else
-    raise e
-  end
+  raise e if environment == "development"
+  warn "Failed to change user"
 end

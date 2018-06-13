@@ -19,6 +19,9 @@ gem "yajl-ruby"
 gem "hiredis"
 gem "redis", "~> 4.0", require: ["redis", "redis/connection/hiredis"]
 gem "redis-rails"
+
+# -------[ Jobs ]-------
+gem "childprocess", "~> 0.9"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 
