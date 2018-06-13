@@ -4,14 +4,14 @@ ruby "~> 2.5"
 
 # -------[ Core ]-------
 gem "rails", "~> 5.1.6"
-gem "puma", "~> 3.7"
+gem "rack-handlers"
+gem "unicorn"
 gem "dotenv-rails", "~> 2.2"
 
 # -------[ Database ]-------
 gem "mongoid", "~> 7.0.1"
 
-# -------[ Misc ]-------
-gem "rest-client"
+# -------[ API ]-------
 gem "jbuilder", "~> 2.7"
 gem "yajl-ruby"
 
@@ -25,6 +25,9 @@ gem "childprocess", "~> 0.9"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 
+# -------[ Misc ]-------
+gem "rest-client"
+
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
 end
@@ -35,11 +38,6 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "rubocop", "0.57.1", require: false
   gem "pry-rails"
-end
-
-group :production do
-  gem "rack-handlers"
-  gem "unicorn"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
