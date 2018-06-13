@@ -14,7 +14,7 @@ module_function
     Rails.logger.debug { "#{self} | Fetching user data for #{uid}" }
     user_data = RestClient.get(url, Authorization: "Bot #{token}")
     JSON.parse(user_data)
-  rescue ExceptionWithResponse, JSON::ParserError
-    nil
+  rescue RestClient::ExceptionWithResponse, JSON::ParserError
+    {}
   end
 end
