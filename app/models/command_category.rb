@@ -33,7 +33,7 @@ class CommandCategory
     osu: "osu"
   }.freeze
 
-  store_in collection: "BotCommandCategories"
+  store_in client: "sigma", collection: "ModuleCache"
 
   field :name, type: String
   has_many :commands, class_name: "Command", dependent: :destroy

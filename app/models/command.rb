@@ -3,12 +3,12 @@
 class Command
   include Mongoid::Document
 
-  store_in collection: "BotCommands"
+  store_in client: "sigma", collection: "CommandCache"
 
   field :name, type: String
   field :desc, type: String, default: ""
   field :alts, type: Array, default: []
-  field :usage, type: String, default: -> { ">>#{name}" }
+  field :usage, type: String, default: -> { "{pfx}{name}" }
   field :nsfw, type: Boolean, default: false
   field :partner, type: Boolean, default: false
   field :admin, type: Boolean, default: false
@@ -16,6 +16,11 @@ class Command
   belongs_to :category, class_name: "CommandCategory"
 
   validates :name, presence: true, uniqueness: true
+
+  # TODO: Get actual prefix from bot
+  def usage
+    self[:usage].sub("{pfx}", ">>").sub("{cmd}", name)
+  end
 
   def matches?(**criteria)
     criteria.map { |k, v| send("matches_#{k}?", v) }.all?
