@@ -13,10 +13,6 @@ Rails.application.routes.draw do
       scope :luci do
         get "status", to: "luci#show"
       end
-
-      scope :bus do
-        get "times", to: "busplus#show"
-      end
     end
   end
 
