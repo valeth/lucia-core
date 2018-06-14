@@ -27,6 +27,8 @@ module LuciaCore
 
     config.cache_store = :redis_store, ENV["REDIS_URL"], { expires_in: 1.day }
 
+    config.x.systemd_info_socket = ENV.fetch("SYSTEMD_INFO_SOCKET", "/tmp/sysmon.sock")
+
     sigma_path = ENV["SIGMA_PATH"]
     config.x.sigma_path =
       if sigma_path
