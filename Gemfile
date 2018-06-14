@@ -5,8 +5,9 @@ ruby "~> 2.5"
 # -------[ Core ]-------
 gem "rails", "~> 5.1.6"
 gem "rack-handlers"
-gem "unicorn"
 gem "dotenv-rails", "~> 2.2"
+gem "unicorn", platforms: %i[ruby]
+gem "puma", platforms: %i[mingw mswin x64_mingw]
 
 # -------[ Database ]-------
 gem "mongoid", "~> 7.0.1"
