@@ -28,7 +28,9 @@ RUN apk add --update --no-cache \
  && gem install \
     bundler
 
-RUN addgroup -S app && adduser -S -H -G app app
+ARG user_uid=1000
+ARG user_gid=1000
+RUN addgroup -S -g "$user_gid" app && adduser -S -G app -u "$user_uid" app
 
 ENV APP_ROOT="/app"
 RUN mkdir -p "$APP_ROOT" && chown app:app "$APP_ROOT"

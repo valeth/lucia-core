@@ -29,6 +29,8 @@ services:
 
   web:
     image: "lucia-core:latest"
+    build:
+      context: ./
     env_file: ".env"
     environment:
       RAILS_ENV: "production"
@@ -40,6 +42,10 @@ services:
       MONGOID_SIGMA_HOST: "database:27017"
     ports:
       - "3000:3000"
+    volumes:
+      - type: tmpfs
+        target: /tmp
+      - "/tmp/sysmon.sock:/tmp/sysmon.sock"
     depends_on:
       - "database"
       - "redis_cache"
