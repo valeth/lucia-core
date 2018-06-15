@@ -1,0 +1,10 @@
+*
+!app
+!bin
+!config
+!db
+!lib
+!public
+!config.ru
+!Gemfile*
+!Rakefile

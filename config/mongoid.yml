@@ -29,7 +29,7 @@ production:
     default:
       database: lucia
       hosts:
-        - localhost:27017
+        - <%= ENV.fetch("MONGOID_DEFAULT_HOST") { "localhost:27017" } %>
       options:
         user: <%= Rails.application.secrets.mongoid[:default][:user] %>
         password: <%= Rails.application.secrets.mongoid[:default][:password] %>
@@ -39,7 +39,7 @@ production:
     sigma:
       database: aurora
       hosts:
-        - localhost:27017
+        - <%= ENV.fetch("MONGOID_SIGMA_HOST") { "localhost:27017" } %>
       options:
         user: <%= Rails.application.secrets.mongoid[:sigma][:user] %>
         password: <%= Rails.application.secrets.mongoid[:sigma][:password] %>
