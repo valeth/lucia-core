@@ -2,6 +2,7 @@
 
 require_dependency "discord_user_fetcher"
 
+# TODO: migrate collection to match main database key format
 class DiscordUser
   include Mongoid::Document
 

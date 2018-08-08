@@ -6,8 +6,8 @@ class Cookie
 
   store_in client: "sigma", collection: "Cookies"
 
-  field :UserID, as: :uid, type: Integer
-  field :Cookies, as: :score, type: Integer
+  field :user_id, as: :uid, type: Integer
+  field :cookies, as: :score, type: Integer, default: 0
 
 private
 

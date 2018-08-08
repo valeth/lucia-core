@@ -6,8 +6,8 @@ class CurrencySystem
 
   store_in client: "sigma", collection: "CurrencySystem"
 
-  field :UserID, as: :uid, type: Integer
-  field :global, as: :score, type: Integer
+  field :user_id, as: :uid, type: Integer
+  field :global, as: :score, type: Integer, default: 0
 
 private
 
