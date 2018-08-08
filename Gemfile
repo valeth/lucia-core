@@ -39,6 +39,7 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "rubocop", "0.57.1", require: false
   gem "pry-rails"
+  gem "rack-cors", require: "rack/cors"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,4 +1,11 @@
 Rails.application.configure do
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins "*"
+      resource "*", headers: :any, methods: %i[get]
+    end
+  end
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.debug_exception_response_format = :default
