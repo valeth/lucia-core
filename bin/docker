@@ -46,7 +46,7 @@ def docker_push(image_name, versions)
 end
 
 version = ARGV.first
-image_name = "registry.gitlab.com/lu-ci/lucia-core"
+image_name = "registry.gitlab.com/lu-ci/lucia/lucia-core"
 
 begin
   versions = ["latest", *validate_version(version)]
