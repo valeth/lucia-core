@@ -10,7 +10,7 @@ module Sigma
       {
         commands: CommandStatistic.all,
         events: EventStatistic.all,
-        general: GeneralStatistic.where(name: :population).first,
+        general: GeneralStatistic.sum,
         special: SpecialStatistic.all
       }
     end
