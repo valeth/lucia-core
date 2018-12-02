@@ -7,7 +7,7 @@ class Cookie
   store_in client: "sigma", collection: "Cookies"
 
   field :user_id, as: :uid, type: Integer
-  field :cookies, as: :score, type: Integer, default: 0
+  field :ranked, as: :score, type: Integer, default: 0
 
 private
 

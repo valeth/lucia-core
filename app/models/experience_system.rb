@@ -7,7 +7,7 @@ class ExperienceSystem
   store_in client: "sigma", collection: "ExperienceSystem"
 
   field :user_id, as: :uid, type: Integer
-  field :global, as: :score, type: Integer, default: 0
+  field :ranked, as: :score, type: Integer, default: 0
 
 private
 
