@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CurrencySystem
+class CurrencyResource
   include Mongoid::Document
   include Score
 

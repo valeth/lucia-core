@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ExperienceSystem
+class ExperienceResource
   include Mongoid::Document
   include Score
 

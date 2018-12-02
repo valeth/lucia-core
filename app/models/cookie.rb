@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Cookie
+class CookiesResource
   include Mongoid::Document
   include Score
 
