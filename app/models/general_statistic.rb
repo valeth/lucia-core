@@ -12,13 +12,14 @@ class GeneralStatistic
   field :channel_count, type: Integer
   field :member_count, type: Integer
 
-  def sum
+  def self.collect_stats
     tmp = where(name: :population)
           .reduce(guild_count: 0, channel_count: 0, member_count: 0) do |acc, item|
-            [acc[:guild_count] + item.guild_count,
-             acc[:channel_count] + item.channel_count,
-             acc[:member_count] + item.member_count]
+            { guild_count:   acc[:guild_count] + item.guild_count,
+              channel_count: acc[:channel_count] + item.channel_count,
+              member_count:  acc[:member_count] + item.member_count }
           end
+
     OpenStruct.new(tmp)
   end
 end

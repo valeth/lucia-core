@@ -10,7 +10,7 @@ module Sigma
       {
         commands: CommandStatistic.all,
         events: EventStatistic.all,
-        general: GeneralStatistic.sum,
+        general: GeneralStatistic.collect_stats,
         special: SpecialStatistic.all
       }
     end
