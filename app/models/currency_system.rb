@@ -4,7 +4,7 @@ class CurrencySystem
   include Mongoid::Document
   include Score
 
-  store_in client: "sigma", collection: "CurrencySystem"
+  store_in client: "sigma", collection: "CurrencyResource"
 
   field :user_id, as: :uid, type: Integer
   field :ranked, as: :score, type: Integer, default: 0

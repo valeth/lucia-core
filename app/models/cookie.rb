@@ -4,7 +4,7 @@ class Cookie
   include Mongoid::Document
   include Score
 
-  store_in client: "sigma", collection: "Cookies"
+  store_in client: "sigma", collection: "CookiesResource"
 
   field :user_id, as: :uid, type: Integer
   field :ranked, as: :score, type: Integer, default: 0
