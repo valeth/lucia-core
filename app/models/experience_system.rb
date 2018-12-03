@@ -4,7 +4,7 @@ class ExperienceResource
   include Mongoid::Document
   include Score
 
-  store_in client: "sigma", collection: "ExperienceResource"
+  store_in client: "sigma", collection: "ExperienceSystem"
 
   field :user_id, as: :uid, type: Integer
   field :ranked, as: :score, type: Integer, default: 0

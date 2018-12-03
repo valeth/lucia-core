@@ -15,9 +15,9 @@ module Sigma
     def scores(board)
       res =
         case board
-        when "currency" then CurrencyResource
-        when "experience" then ExperienceResource
-        when "cookies" then CookiesResource
+        when "currency" then CurrencySystem
+        when "experience" then ExperienceSystem
+        when "cookies" then Cookie
         else raise InvalidLeaderboard, %(No leaderboard named "#{board}")
         end
       res.all.sort(score: -1).limit(20) if res
