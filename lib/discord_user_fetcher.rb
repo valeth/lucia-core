@@ -17,4 +17,8 @@ module_function
   rescue RestClient::ExceptionWithResponse, JSON::ParserError
     {}
   end
+
+  def url_valid?(url)
+    RestClient.get(url) { |res, _, _| res.code == 200 }
+  end
 end

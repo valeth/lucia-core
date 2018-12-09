@@ -15,7 +15,7 @@ class DiscordUser
   def self.cached_data(uid)
     cached_user = where(uid: uid).first
 
-    if !cached_user || cached_user.cache_expired?
+    if !cached_user || cached_user.cache_expired? || cached_user.avatar_url_valid?
       user_data = DiscordUserFetcher.fetch(uid)
       cache_data = { uid: uid, data: user_data, timestamp: Time.now }
       if cached_user
@@ -32,6 +32,10 @@ class DiscordUser
 
   def cache_expired?
     timestamp.next_day < Time.now
+  end
+
+  def avatar_url_valid?
+    data.key?("avatar") && DiscordUserFetcher.url_valid?(avatar_url)
   end
 
   def avatar_url(fallback: "https://i.imgur.com/QnYSlld.png")
