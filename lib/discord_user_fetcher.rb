@@ -14,7 +14,8 @@ module_function
     Rails.logger.debug { "#{self} | Fetching user data for #{uid}" }
     user_data = RestClient.get(url, Authorization: "Bot #{token}")
     JSON.parse(user_data)
-  rescue RestClient::ExceptionWithResponse, JSON::ParserError
+  rescue RestClient::ExceptionWithResponse, JSON::ParserError => e
+    Rails.logger.debug { "Failed to fetch Discord user information: #{e}" }
     {}
   end
 end
