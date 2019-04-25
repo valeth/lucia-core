@@ -3,7 +3,7 @@
 class SpecialStatistic
   include Mongoid::Document
 
-  store_in client: "sigma", collection: "SpecialStats"
+  store_in collection: "SpecialStats"
 
   field :name, type: String
   field :count, type: Integer

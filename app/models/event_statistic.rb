@@ -3,7 +3,7 @@
 class EventStatistic
   include Mongoid::Document
 
-  store_in client: "sigma", collection: "EventStats"
+  store_in collection: "EventStats"
 
   field :event, as: :name, type: String
   field :count, type: Integer

@@ -1,7 +1,7 @@
 class BotVersion
   include Mongoid::Document
 
-  store_in client: "sigma", collection: "VersionCache"
+  store_in collection: "VersionCache"
 
   field :beta, type: Boolean
   field :build_date, type: Integer

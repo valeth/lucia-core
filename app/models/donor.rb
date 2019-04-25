@@ -1,7 +1,7 @@
 class Donor
   include Mongoid::Document
 
-  store_in client: "sigma", collection: "DonorCache"
+  store_in collection: "DonorCache"
 
   field :duid, type: Integer
   field :tier, type: Integer

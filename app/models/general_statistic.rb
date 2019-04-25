@@ -5,7 +5,7 @@ require "ostruct"
 class GeneralStatistic
   include Mongoid::Document
 
-  store_in client: "sigma", collection: "GeneralStats"
+  store_in collection: "GeneralStats"
 
   field :name, type: String
   field :guild_count, type: Integer

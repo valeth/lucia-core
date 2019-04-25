@@ -1,10 +1,6 @@
 development:
   clients:
     default:
-      database: lucia
-      hosts:
-        - localhost:27017
-    sigma:
       database: aurora
       hosts:
         - localhost:27017
@@ -27,16 +23,6 @@ test:
 production:
   clients:
     default:
-      database: lucia
-      hosts:
-        - <%= ENV.fetch("MONGOID_DEFAULT_HOST") { "localhost:27017" } %>
-      options:
-        user: <%= Rails.application.secrets.mongoid[:default][:user] %>
-        password: <%= Rails.application.secrets.mongoid[:default][:password] %>
-        roles:
-          - 'dbOwner'
-        auth_source: admin
-    sigma:
       database: aurora
       hosts:
         - <%= ENV.fetch("MONGOID_SIGMA_HOST") { "localhost:27017" } %>

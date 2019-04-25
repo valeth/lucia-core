@@ -3,7 +3,7 @@
 class Command
   include Mongoid::Document
 
-  store_in client: "sigma", collection: "CommandCache"
+  store_in collection: "CommandCache"
 
   field :name, type: String
   field :desc, type: String, default: ""
