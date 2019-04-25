@@ -9,10 +9,6 @@ Rails.application.routes.draw do
         get "leaderboard/:id", to: "leaderboards#show"
         get "version", to: "version#show"
       end
-
-      scope :luci do
-        get "status", to: "luci#show"
-      end
     end
   end
 
