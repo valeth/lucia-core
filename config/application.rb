@@ -1,20 +1,16 @@
 require_relative "boot"
 
 require "rails"
-# Pick the frameworks you want:
-# require "active_model/railtie"
 require "active_job/railtie"
-# require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
-# require "action_cable/engine"
-# require "sprockets/railtie"
-# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+ConfigurationError = Class.new(StandardError)
 
 module LuciaCore
   class Application < Rails::Application
@@ -25,26 +21,12 @@ module LuciaCore
 
     config.active_job.queue_adapter = :sidekiq
 
-    config.cache_store = :redis_store, ENV["REDIS_URL"], { expires_in: 1.day }
+    redis_url = ENV.fetch("REDIS_URL") { "redis://localhost:6379/0/cache" }
+    config.cache_store = :redis_store, redis_url, { expires_in: 1.day }
 
-    config.x.systemd_info_socket = ENV.fetch("SYSTEMD_INFO_SOCKET", "/tmp/sysmon.sock")
-
-    sigma_path = ENV["SIGMA_PATH"]
-    config.x.sigma_path =
-      if sigma_path
-        Pathname.new(sigma_path).expand_path
-      else
-        Rails.root.join("../apex-sigma")
-      end
-
-    sigma_token = ENV["DISCORD_BOT_TOKEN"]
-    config.x.sigma_token =
-      if sigma_token.blank?
-        yml = config.x.sigma_path.join("config/core/discord.yml")
-        YAML.safe_load(yml.read)["token"]
-      else
-        sigma_token
-      end
+    config.x.sigma_token = ENV.fetch("DISCORD_BOT_TOKEN") do
+      raise ConfigurationError, "Bot token cannot be blank"
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
