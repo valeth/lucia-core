@@ -40,6 +40,7 @@ group :development do
   gem "rubocop", "0.57.1", require: false
   gem "pry-rails"
   gem "rack-cors", require: "rack/cors"
+  gem "puma"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
