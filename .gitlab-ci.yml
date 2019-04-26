@@ -1,0 +1,54 @@
+image: "ruby:2.5.1"
+
+stages:
+  - prepare
+  - testing
+
+variables:
+  BUNDLE_PATH: "cache/bundler"
+  RAILS_ENV: "test"
+  MONGOID_SIGMA_HOST: "mongo:27017"
+  REDIS_URL: "redis://redis:6379/0"
+  SIDEKIQ_REDIS_URL: "redis://redis:6379/1"
+
+services:
+  - mongo:3
+  - redis:4.0-alpine
+
+.cache: &cache
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+    - cache/
+
+.test-job:
+  cache:
+    <<: *cache
+    policy: pull
+  stage: testing
+
+# [ Jobs ]
+
+prepare:
+  cache:
+    <<: *cache
+  stage: prepare
+  script:
+    - bundle --version
+    - bundle install
+  tags:
+    - ruby
+
+rubocop:
+  extends: .test-job
+  script:
+    - bundle exec rubocop
+  tags:
+    - ruby
+
+rspec:
+  extends: .test-job
+  script:
+    - bundle exec rake db:setup
+    - bundle exec rspec
+  tags:
+    - ruby
