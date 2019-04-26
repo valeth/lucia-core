@@ -14,8 +14,17 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
 
   context "GET /rest/v1/sigma/leaderboards/currency" do
     before do
-      ids.each do |uid|
-        CurrencySystem.create(uid: uid, score: rand(10000))
+      gids = %w[200751504175398912 217081703137542145 273534239310479360 442252698964721669]
+      ids.each.with_index(0) do |uid, i|
+        CurrencySystem.create do |m|
+          m.uid = uid,
+          m.score = rand(10000)
+          m.origins = {
+            "guilds"   => { gids[i % 4] => rand(99) },
+            "users"    => { rand(100_000_000_000_000_000).to_s => rand(99) },
+            "channels" => { rand(100_000_000_000_000_000).to_s => rand(99) }
+          }
+        end
       end
     end
 
@@ -25,6 +34,14 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
       results = JSON.parse(response.body)
       expect(results.size).to eq(20)
       expect_ordered(results)
+    end
+
+    it "lists only users from specific guild" do
+      get "/rest/v1/sigma/leaderboards/currency?filter[guild_id]=200751504175398912"
+
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results.size).to eq(6)
     end
   end
 

@@ -8,6 +8,7 @@ class Cookie
 
   field :user_id, as: :uid, type: Integer
   field :ranked, as: :score, type: Integer, default: 0
+  field :origins, type: Hash, default: { "users": {}, "guilds": {}, "channels": {} }
 
 private
 

@@ -5,7 +5,7 @@ class API::V1::Sigma::Commands < Grape::API
     params do
       optional :filter, type: Hash, allow_blank: false
       given :filter do
-        group :filter, type: Hash do
+        optional :filter, type: Hash do
           optional :name, type: String, allow_blank: false
           optional :desc, type: String, allow_blank: false
           at_least_one_of :name, :desc
