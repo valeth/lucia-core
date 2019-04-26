@@ -3,7 +3,7 @@ development:
     default:
       database: aurora
       hosts:
-        - localhost:27017
+        - <%= ENV.fetch("MONGOID_SIGMA_HOST") { "localhost:27017" } %>
   options:
     use_activesupport_time_zone: true
     use_utc: true
@@ -14,7 +14,7 @@ test:
     default:
       database: lucia_core_test
       hosts:
-        - localhost:27017
+        - <%= ENV.fetch("MONGOID_SIGMA_HOST") { "localhost:27017" } %>
       options:
         read:
           mode: :primary
