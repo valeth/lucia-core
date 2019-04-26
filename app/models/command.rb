@@ -8,7 +8,7 @@ class Command
   field :name, type: String
   field :desc, type: String, default: ""
   field :alts, type: Array, default: []
-  field :usage, type: String, default: -> { "{pfx}{name}" }
+  field :usage, type: String, default: -> { "{pfx}{cmd}" }
   field :nsfw, type: Boolean, default: false
   field :partner, type: Boolean, default: false
   field :admin, type: Boolean, default: false
@@ -18,7 +18,7 @@ class Command
   validates :name, presence: true, uniqueness: true
 
   def usage
-    self[:usage].sub("{pfx}", ">>").sub("{name}", name)
+    self[:usage].sub("{pfx}", ">>").sub("{cmd}", name)
   end
 
   def matches?(**criteria)
