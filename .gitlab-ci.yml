@@ -7,13 +7,9 @@ stages:
 variables:
   BUNDLE_PATH: "cache/bundler"
   RAILS_ENV: "test"
-  MONGOID_SIGMA_HOST: "mongo:27017"
-  REDIS_URL: "redis://redis:6379/0"
-  SIDEKIQ_REDIS_URL: "redis://redis:6379/1"
-
-services:
-  - mongo:3
-  - redis:4.0-alpine
+  MONGOID_SIGMA_HOST: "database-1:27017"
+  REDIS_URL: "redis://redis-1:6379/0"
+  SIDEKIQ_REDIS_URL: "redis://redis-1:6379/1"
 
 .cache: &cache
   key: "$CI_COMMIT_REF_NAME"
@@ -47,6 +43,11 @@ rubocop:
 
 rspec:
   extends: .test-job
+  services:
+    - name: mongo:3
+      alias: database-1
+    - name: redis:4.0-alpine
+      alias: redis-1
   script:
     - bundle exec rake db:setup
     - bundle exec rspec
