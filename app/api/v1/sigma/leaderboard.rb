@@ -22,7 +22,7 @@ class API::V1::Sigma::Leaderboard < Grape::API
     end
   end
 
-  namespace :leaderboards do
+  namespace :leaderboard do
     params do
       requires :kind, type: String, values: %w[cookies currency experience]
       optional :filter, type: Hash, allow_blank: false

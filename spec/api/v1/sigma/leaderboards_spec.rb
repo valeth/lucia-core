@@ -12,7 +12,7 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
     end
   end
 
-  context "GET /rest/v1/sigma/leaderboards/currency" do
+  context "GET /rest/v1/sigma/leaderboard/currency" do
     before do
       gids = %w[200751504175398912 217081703137542145 273534239310479360 442252698964721669]
       ids.each.with_index(0) do |uid, i|
@@ -29,7 +29,7 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
     end
 
     it "lists the top 20 entries" do
-      get "/rest/v1/sigma/leaderboards/currency"
+      get "/rest/v1/sigma/leaderboard/currency"
       expect(response.status).to eq(200)
       results = JSON.parse(response.body)
       expect(results.size).to eq(20)
@@ -37,7 +37,7 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
     end
 
     it "lists only users from specific guild" do
-      get "/rest/v1/sigma/leaderboards/currency?filter[guild_id]=200751504175398912"
+      get "/rest/v1/sigma/leaderboard/currency?filter[guild_id]=200751504175398912"
 
       expect(response.status).to eq(200)
       results = JSON.parse(response.body)
@@ -45,7 +45,7 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
     end
   end
 
-  context "GET /rest/v1/sigma/leaderboards/experience" do
+  context "GET /rest/v1/sigma/leaderboard/experience" do
     before do
       ids.each do |uid|
         ExperienceSystem.create(uid: uid, score: rand(10000))
@@ -53,7 +53,7 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
     end
 
     it "lists the top 20 entries" do
-      get "/rest/v1/sigma/leaderboards/experience"
+      get "/rest/v1/sigma/leaderboard/experience"
       expect(response.status).to eq(200)
       results = JSON.parse(response.body)
       expect(results.size).to eq(20)
@@ -61,7 +61,7 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
     end
   end
 
-  context "GET /rest/v1/sigma/leaderboards/cookies" do
+  context "GET /rest/v1/sigma/leaderboard/cookies" do
     before do
       ids.each do |uid|
         Cookie.create(uid: uid, score: rand(20))
@@ -69,7 +69,7 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
     end
 
     it "lists the top 20 entries" do
-      get "/rest/v1/sigma/leaderboards/cookies"
+      get "/rest/v1/sigma/leaderboard/cookies"
       expect(response.status).to eq(200)
       results = JSON.parse(response.body)
       expect(results.size).to eq(20)
