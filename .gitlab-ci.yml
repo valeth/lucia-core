@@ -71,4 +71,4 @@ pages:
       - public
     expire_in: 30 days
   only:
-    - master@luci/lucia/lucia-core
+    - master@lu-ci/lucia/lucia-core
