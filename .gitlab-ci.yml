@@ -3,6 +3,7 @@ image: "ruby:2.5.1"
 stages:
   - prepare
   - testing
+  - deploy
 
 variables:
   BUNDLE_PATH: "cache/bundler"
@@ -38,6 +39,7 @@ rubocop:
   extends: .test-job
   script:
     - bundle exec rubocop
+  allow_failure: true
   tags:
     - ruby
 
@@ -51,5 +53,22 @@ rspec:
   script:
     - bundle exec rake db:setup
     - bundle exec rspec
+  artifacts:
+    paths:
+      - coverage/
   tags:
     - ruby
+
+# Coverage report
+pages:
+  stage: deploy
+  dependencies:
+    - rspec
+  script:
+    - mv coverage/ public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - master@luci/lucia/lucia-core
