@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ::API::V1::Sigma::Leaderboard do
   let(:ids) do
-    21.times.map { rand(100_000_000_000_000_000) }
+    Array.new(21) { rand(100_000_000_000_000_000) }
     # [217_078_934_976_724_992, 125_750_263_687_413_760, 137_951_917_644_054_529]
   end
 

@@ -16,7 +16,7 @@ timeout 30
 
 initialized = false
 
-before_fork do |server, worker|
+before_fork do
   next if initialized
 
   if ENV.fetch("UNICORN_SIDEKIQ", false)
@@ -28,12 +28,15 @@ before_fork do |server, worker|
         p.wait
         p.close
       end
+    # rubocop:disable Style/RescueStandardError
     rescue => e
       raise e if environment == "development"
+
       warn e.message
       warn e.backtrace.join("\n")
       exit 1
     end
+    # rubocop:enable Style/RescueStandardError
   end
 
   initialized = true
@@ -42,7 +45,7 @@ end
 worker_user = ENV.fetch("UNICORN_WORKER_USER") { Etc.getpwuid(Process.euid).name }
 worker_group = ENV.fetch("UNICORN_WORKER_GROUP") { Etc.getgrgid(Process.egid).name }
 
-after_fork do |server, worker|
+after_fork do
   uid = Process.euid
   gid = Process.egid
   target_uid = Etc.getpwnam(worker_user).uid
@@ -53,7 +56,10 @@ after_fork do |server, worker|
     Process::GID.change_privilege(target_gid)
     Process::UID.change_privilege(target_uid)
   end
+# rubocop:disable Style/RescueStandardError
 rescue => e
   raise e if environment == "development"
+
   warn "Failed to change user"
 end
+# rubocop:enable Style/RescueStandardError

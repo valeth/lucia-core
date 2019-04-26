@@ -32,16 +32,15 @@ RSpec.describe ::API::V1::Sigma::Commands do
           "names" => { "primary" => "hello", "alts" => [] },
           "category" => "test",
           "desc" => "Nothing",
-          "sfw" => true,
-        },
-        {
+          "sfw" => true
+        }, {
           "admin" => true,
           "partner" => false,
           "usage" => ">>help",
           "names" => { "primary" => "help", "alts" => [] },
           "category" => "test",
           "desc" => "I've fallen",
-          "sfw" => false,
+          "sfw" => false
         }]
       }]
     end

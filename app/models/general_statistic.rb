@@ -14,11 +14,10 @@ class GeneralStatistic
 
   def self.collect_stats
     tmp = where(name: :population)
-          .reduce(guild_count: 0, channel_count: 0, member_count: 0) do |acc, item|
+          .each_with_object(guild_count: 0, channel_count: 0, member_count: 0) do |item, acc|
             acc[:guild_count] += item.guild_count if item.guild_count
             acc[:channel_count] += item.channel_count if item.channel_count
             acc[:member_count] + item.member_count if item.member_count
-            acc
           end
 
     OpenStruct.new(tmp)

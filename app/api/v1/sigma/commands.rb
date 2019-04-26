@@ -16,11 +16,14 @@ class API::V1::Sigma::Commands < Grape::API
     get do
       categories =
         if params[:filter]
-          CommandCategory.all.sort(name: 1)
+          CommandCategory.all
+            .sort(name: 1)
             .map { |c| c.filter_commands(params[:filter]) }
             .select(&:commands_available?)
         else
-          CommandCategory.all.sort(name: 1).select(&:commands_available?)
+          CommandCategory.all
+            .sort(name: 1)
+            .select(&:commands_available?)
         end
 
       present categories, with: ::Entities::BotCommandCategory

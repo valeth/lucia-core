@@ -50,6 +50,7 @@ class CommandCategory
 
   def filter_commands(criteria)
     return self unless criteria.respond_to?(:to_h)
+
     self.class.new(name: self[:name]).tap do |cat|
       cat.commands = commands.select do |cmd|
         cmd.matches?(criteria.to_h.symbolize_keys)

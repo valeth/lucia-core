@@ -9,6 +9,7 @@ class ObjectifiedHash
     if respond_to_missing?(key)
       if /^.*=$/.match?(key)
         raise FrozenError, "can't modify frozen object" if frozen?
+
         @data[key[0..-2].to_sym] = args.first
       else
         @data.fetch(key, nil)
@@ -35,6 +36,7 @@ class ObjectifiedHash
 
   def ==(other)
     return false unless other.is_a?(self.class)
+
     to_h == other.to_h
   end
 
@@ -62,6 +64,7 @@ private
 
   def respond_to_missing?(name, include_private = false)
     return true if /^.*=$/.match?(name)
-    @data.keys.include?(name) || super
+
+    @data.key?(name) || super
   end
 end

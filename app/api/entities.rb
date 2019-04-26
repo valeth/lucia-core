@@ -28,9 +28,7 @@ module Entities
   end
 
   class BotCommandCategory < Grape::Entity
-    format_with :titleize do |title|
-      title.titleize
-    end
+    format_with(:titleize, &:titleize)
 
     expose :name, format_with: :titleize
     expose :icon

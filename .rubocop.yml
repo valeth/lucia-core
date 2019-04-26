@@ -8,6 +8,8 @@ AllCops:
     - "bin/**/*"
     - "cache/**/*"
     - "vendor/**/*"
+    - "spec/spec_helper.rb"
+    - "spec/rails_helper.rb"
 
 
 # -------[ Layout ]-------
@@ -73,6 +75,8 @@ Layout/TrailingBlankLines:
 Layout/TrailingWhitespace:
   Enabled: true
 
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
 
 # -------[ Lint ]-------
 
@@ -113,6 +117,11 @@ Style/UnneededPercentQ:
 Style/Documentation:
   Enabled: false
 
+Style/ColonMethodCall:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
 
 # -------[ Metrics ]-------
 
@@ -121,6 +130,11 @@ Metrics/LineLength:
 
 Metrics/MethodLength:
   Max: 20
+
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - "spec/**/*_spec.rb"
 
 Metrics/AbcSize:
   Enabled: false

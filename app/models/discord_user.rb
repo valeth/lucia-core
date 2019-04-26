@@ -12,11 +12,11 @@ class DiscordUser
   end
 
   def self.cached_data(uid)
-    data = Rails.cache.fetch("#{uid}-discord-user", expires_in: 5.seconds) do
+    data = Rails.cache.fetch("#{uid}-discord-user", expires_in: 5.minutes) do
       DiscordUserFetcher.fetch(uid)
     end
 
-    self.new(uid, data)
+    new(uid, data)
   end
 
   def avatar_url(fallback: "https://i.imgur.com/QnYSlld.png")
