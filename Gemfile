@@ -14,7 +14,6 @@ gem "mongoid", "~> 7.0.1"
 # -------[ API ]-------
 gem "grape", "~> 1.2"
 gem "grape-entity", "~> 0.7"
-gem "jbuilder", "~> 2.7"
 gem "yajl-ruby"
 
 # -------[ Cache ]-------
@@ -30,8 +29,16 @@ gem "sidekiq-scheduler"
 # -------[ Misc ]-------
 gem "rest-client"
 
+group :test do
+  gem "database_cleaner", "~> 1.7"
+  gem "webmock", "~> 3.5"
+  gem "addressable", "~> 2.6"
+  gem "simplecov", "~> 0.16", require: false
+end
+
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "rspec-rails", "~> 3.8"
 end
 
 group :development do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class V1::Sigma::Commands < Grape::API
+class API::V1::Sigma::Commands < Grape::API
   namespace :commands do
     params do
       optional :filter, type: Hash, allow_blank: false

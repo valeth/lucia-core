@@ -5,10 +5,10 @@ class API < Grape::API
   prefix :rest
 
   version "v1", using: :path do
-    mount ::V1::Sigma
+    mount ::API::V1::Sigma
   end
 
-  mount ::V1::Sigma
+  mount ::API::V1::Sigma
 
   get do
     API::routes.map(&:namespace).uniq

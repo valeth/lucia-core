@@ -18,7 +18,7 @@ class Command
   validates :name, presence: true, uniqueness: true
 
   def usage
-    self[:usage].sub("{pfx}", ">>").sub("{cmd}", name)
+    self[:usage].sub("{pfx}", ">>").sub("{name}", name)
   end
 
   def matches?(**criteria)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class V1::Sigma < Grape::API
+class API::V1::Sigma < Grape::API
   namespace :sigma do
     mount Commands
     mount Donors

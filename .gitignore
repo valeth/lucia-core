@@ -18,6 +18,7 @@
 
 .byebug_history
 /.env
+/coverage
 
 # IDE and editor stuff
 /.idea

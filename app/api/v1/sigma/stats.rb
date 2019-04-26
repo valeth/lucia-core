@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class V1::Sigma::Stats < Grape::API
+class API::V1::Sigma::Stats < Grape::API
   helpers do
     def stats
       {
