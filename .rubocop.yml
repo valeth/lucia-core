@@ -78,6 +78,9 @@ Layout/TrailingWhitespace:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
+Layout/AlignArray:
+  Enabled: false
+
 # -------[ Lint ]-------
 
 Lint/RequireParentheses:

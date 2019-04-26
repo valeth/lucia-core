@@ -20,8 +20,8 @@ RSpec.describe ::API::V1::Sigma::Leaderboard do
           m.uid = uid,
           m.score = rand(10000)
           m.origins = {
-            "guilds"   => { gids[i % 4] => rand(99) },
-            "users"    => { rand(100_000_000_000_000_000).to_s => rand(99) },
+            "guilds" => { gids[i % 4] => rand(99) },
+            "users" => { rand(100_000_000_000_000_000).to_s => rand(99) },
             "channels" => { rand(100_000_000_000_000_000).to_s => rand(99) }
           }
         end
