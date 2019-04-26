@@ -9,7 +9,7 @@ class V1::Sigma::Leaderboard < Grape::API
         when "experience" then ExperienceSystem
         when "cookies" then Cookie
         end
-      scores = resource.all.limit(20).sort_by { |e| e[:score] }
+      scores = resource.all.desc(:score).limit(20)
       present scores, with: ::Entities::Score
     end
   end
