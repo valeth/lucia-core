@@ -34,5 +34,33 @@ RSpec.describe ::API::V1::Sigma::Stats do
       expect(results.dig("general", "population").values).to all(be_an(Integer))
       expect(results.dig("general", "cmd_count")).to be_an(Integer)
     end
+
+    it "can filter commands" do
+      get "/rest/v1/sigma/stats?filter[command][only]=givecookie,hunt"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results["commands"].keys).to include("givecookie", "hunt")
+      expect(results["commands"].keys).not_to include("fish")
+
+      get "/rest/v1/sigma/stats?filter[command][except]=givecookie,hunt"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results["commands"].keys).not_to include("givecookie", "hunt")
+      expect(results["commands"].keys).to include("fish")
+    end
+
+    it "can filter events" do
+      get "/rest/v1/sigma/stats?filter[event][only]=ready,command"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results["events"].keys).to include("ready", "command")
+      expect(results["events"].keys).not_to include("dbinit")
+
+      get "/rest/v1/sigma/stats?filter[event][except]=ready,command"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results["events"].keys).not_to include("ready", "command")
+      expect(results["events"].keys).to include("dbinit")
+    end
   end
 end
