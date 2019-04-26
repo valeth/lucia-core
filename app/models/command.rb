@@ -17,7 +17,6 @@ class Command
 
   validates :name, presence: true, uniqueness: true
 
-  # TODO: Get actual prefix from bot
   def usage
     self[:usage].sub("{pfx}", ">>").sub("{cmd}", name)
   end

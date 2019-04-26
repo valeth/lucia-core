@@ -1,11 +1,7 @@
-module Sigma
-  class StatsController < ApplicationController
-    def index
-      @stats = stats
-    end
+# frozen_string_literal: true
 
-  private
-
+class V1::Sigma::Stats < Grape::API
+  helpers do
     def stats
       {
         commands: CommandStatistic.all,
@@ -13,6 +9,12 @@ module Sigma
         general: GeneralStatistic.collect_stats,
         special: SpecialStatistic.all
       }
+    end
+  end
+
+  namespace :stats do
+    get do
+      present stats, with: ::Entities::Stats
     end
   end
 end

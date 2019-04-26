@@ -2,4 +2,5 @@
 
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.acronym "NSFW"
+  inflect.acronym "API"
 end

@@ -7,12 +7,13 @@ gem "rails", "~> 5.1.6"
 gem "rack-handlers"
 gem "dotenv-rails", "~> 2.2"
 gem "unicorn", platforms: %i[ruby]
-gem "puma", platforms: %i[mingw mswin x64_mingw]
 
 # -------[ Database ]-------
 gem "mongoid", "~> 7.0.1"
 
 # -------[ API ]-------
+gem "grape", "~> 1.2"
+gem "grape-entity", "~> 0.7"
 gem "jbuilder", "~> 2.7"
 gem "yajl-ruby"
 
