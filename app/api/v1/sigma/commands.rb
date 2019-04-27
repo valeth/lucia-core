@@ -2,6 +2,10 @@
 
 class API::V1::Sigma::Commands < Grape::API
   namespace :commands do
+    before do
+      header "Cache-Control", "public,max-age=3600,must-revalidate"
+    end
+
     params do
       optional :filter, type: Hash, allow_blank: false
       given :filter do
