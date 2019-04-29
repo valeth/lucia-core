@@ -1,6 +1,6 @@
 # |-------<[ Build ]>-------|
 
-FROM ruby:2.5-alpine AS build
+FROM ruby:2.6-alpine AS build
 
 RUN mkdir -p /build
 WORKDIR /build
@@ -19,7 +19,7 @@ RUN apk add --no-cache --virtual \
 
 # |-------<[ App ]>-------|
 
-FROM ruby:2.5-alpine AS lucia-core
+FROM ruby:2.6-alpine AS lucia-core
 
 LABEL maintainer="dev.patrick.auernig@gmail.com"
 

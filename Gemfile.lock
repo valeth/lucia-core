@@ -103,8 +103,7 @@ GEM
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
-    jaro_winkler (1.5.1)
-    jaro_winkler (1.5.1-java)
+    jaro_winkler (1.5.2)
     json (2.2.0)
     json (2.2.0-java)
     kgio (2.11.2)
@@ -143,8 +142,8 @@ GEM
       mini_portile2 (~> 2.3.0)
     nokogiri (1.8.2-x86-mingw32)
       mini_portile2 (~> 2.3.0)
-    parallel (1.12.1)
-    parser (2.5.1.0)
+    parallel (1.17.0)
+    parser (2.6.3.0)
       ast (~> 2.4.0)
     powerpack (0.1.1)
     pry (0.11.3)
@@ -260,7 +259,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-progressbar (1.9.0)
+    ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     rufus-scheduler (3.5.0)
       fugit (~> 1.1, >= 1.1.1)
@@ -308,7 +307,7 @@ GEM
     unf_ext (0.0.7.5)
     unf_ext (0.0.7.5-x64-mingw32)
     unf_ext (0.0.7.5-x86-mingw32)
-    unicode-display_width (1.4.0)
+    unicode-display_width (1.5.0)
     unicorn (5.4.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -367,7 +366,7 @@ DEPENDENCIES
   yajl-ruby
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.6.3p62
 
 BUNDLED WITH
-   1.16.4
+   1.17.2
