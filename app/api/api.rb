@@ -6,6 +6,8 @@ class API < Grape::API
 
   before do
     header "Cache-Control", "public,max-age=0,must-revalidate"
+    header "X-Frame-Options", "sameorigin"
+    header "X-Content-Type-Options", "nosniff"
   end
 
   version "v1", using: :path do
