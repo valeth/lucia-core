@@ -30,8 +30,8 @@ class ObjectifiedHash
     end
   end
 
-  def to_json
-    to_h.to_json
+  def to_json(**options)
+    to_h.to_json(options)
   end
 
   def ==(other)

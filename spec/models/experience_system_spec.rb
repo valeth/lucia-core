@@ -11,7 +11,7 @@ RSpec.describe ExperienceSystem do
       uid: 1,
       score: 0,
       tier: 0,
-      current_level: 0,
+      current_level: 0
     )
   end
 
