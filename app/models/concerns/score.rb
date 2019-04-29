@@ -22,7 +22,7 @@ module Score
     # @return String
     def title
       level = current_level
-      prefix = prefixes[(level % 100) / suffixes.size]
+      prefix = prefixes[(level % 100) / prefixes.size]
       suffix = suffixes[(level % 100) % suffixes.size]
       "#{prefix} #{suffix}"
     end
