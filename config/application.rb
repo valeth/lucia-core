@@ -17,7 +17,8 @@ module LuciaCore
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-    config.autoload_paths << Rails.root.join("lib")
+    config.autoload_paths.push(Rails.root.join("lib"), *Rails.root.glob("app/models/sigma/**/"))
+    config.eager_load_paths.push(*config.autoload_paths.dup)
 
     config.active_job.queue_adapter = :sidekiq
 
