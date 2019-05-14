@@ -56,31 +56,34 @@ module Entities
     end
   end
 
+  class GeneralStats < Grape::Entity
+    expose :population do
+      expose :guild_count
+      expose :member_count
+      expose :channel_count
+    end
+    expose(:cmd_count, &:command_count)
+  end
+
   class Stats < Grape::Entity
     expose :commands do |stats|
-      stats[:commands].each_with_object({}) { |c, acc| acc[c.command] = c.count }
+      ::Entities.list_formatter(stats[:commands])
     end
     expose :events do |stats|
-      stats[:events].each_with_object({}) { |e, acc| acc[e.name] = e.count }
+      ::Entities.list_formatter(stats[:events])
     end
-    expose :general do
-      expose :population do
-        expose :guild_count do |stats|
-          stats[:general].guild_count
-        end
-        expose :member_count do |stats|
-          stats[:general].member_count
-        end
-        expose :channel_count do |stats|
-          stats[:general].channel_count
-        end
-      end
-      expose :cmd_count do |stats|
-        stats[:general].command_count
-      end
-    end
+    expose :general, using: GeneralStats
     expose :special do |stats|
-      stats[:special].each_with_object({}) { |s, acc| acc[s.name] = s.count }
+      ::Entities.list_formatter(stats[:special])
+    end
+  end
+
+module_function
+
+  def list_formatter(list)
+    list.each_with_object({}) do |item, acc|
+      tmp = item.attributes.to_a[1..-1]
+      acc[tmp.dig(0, 1)] = tmp.dig(1, 1)
     end
   end
 end

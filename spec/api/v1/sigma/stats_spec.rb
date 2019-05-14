@@ -62,5 +62,56 @@ RSpec.describe ::API::V1::Sigma::Stats do
       expect(results["events"].keys).not_to include("ready", "command")
       expect(results["events"].keys).to include("dbinit")
     end
+
+    it "can show only general statistics" do
+      get "/rest/v1/sigma/stats/general"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results.keys).to include("population", "cmd_count")
+    end
+
+    it "can show only event statistics" do
+      get "/rest/v1/sigma/stats/events"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results).to be_an(Hash)
+      expect(results.keys).to include("ready", "dbinit", "command")
+
+      get "/rest/v1/sigma/stats/events?filter[only]=ready"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results).to be_an(Hash)
+      expect(results.keys).to include("ready")
+      expect(results.keys).not_to include("dbinit", "command")
+
+      get "/rest/v1/sigma/stats/events?filter[except]=ready,command"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results).to be_an(Hash)
+      expect(results.keys).not_to include("ready", "command")
+      expect(results.keys).to include("dbinit")
+    end
+
+    it "can show only command statistics" do
+      get "/rest/v1/sigma/stats/commands"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results).to be_an(Hash)
+      expect(results.keys).to include("givecookie", "hunt", "fish")
+
+      get "/rest/v1/sigma/stats/commands?filter[only]=fish"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results).to be_an(Hash)
+      expect(results.keys).to include("fish")
+      expect(results.keys).not_to include("givecookie", "hunt")
+
+      get "/rest/v1/sigma/stats/commands?filter[except]=givecookie,hunt"
+      expect(response.status).to eq(200)
+      results = JSON.parse(response.body)
+      expect(results).to be_an(Hash)
+      expect(results.keys).not_to include("givecookie", "hunt")
+      expect(results.keys).to include("fish")
+    end
   end
 end
