@@ -7,4 +7,8 @@ class SpecialStatistic
 
   field :name, type: String
   field :count, type: Integer
+
+  def to_list_entry
+    { name.to_sym => count }
+  end
 end

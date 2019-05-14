@@ -82,8 +82,9 @@ module_function
 
   def list_formatter(list)
     list.each_with_object({}) do |item, acc|
-      tmp = item.attributes.to_a[1..-1]
-      acc[tmp.dig(0, 1)] = tmp.dig(1, 1)
+      next unless item.respond_to?(:to_list_entry)
+
+      acc.update(item.to_list_entry)
     end
   end
 end

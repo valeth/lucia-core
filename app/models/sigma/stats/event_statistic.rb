@@ -17,4 +17,8 @@ class EventStatistic
       all
     end
   end
+
+  def to_list_entry
+    { event.to_sym => count }
+  end
 end

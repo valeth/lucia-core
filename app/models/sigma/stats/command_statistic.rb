@@ -17,4 +17,8 @@ class CommandStatistic
       all
     end
   end
+
+  def to_list_entry
+    { command.to_sym => count }
+  end
 end
