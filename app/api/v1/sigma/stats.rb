@@ -16,8 +16,6 @@ class API::V1::Sigma::Stats < Grape::API
       commands_filter = params.dig(:filter, :command).to_h.symbolize_keys
       events_filter = params.dig(:filter, :event).to_h.symbolize_keys
 
-      Rails.logger.debug commands_filter
-
       commands = CommandStatistic.filtered(**commands_filter)
       events = EventStatistic.filtered(**events_filter)
 

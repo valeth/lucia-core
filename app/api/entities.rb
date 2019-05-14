@@ -76,7 +76,7 @@ module Entities
         end
       end
       expose :cmd_count do |stats|
-        stats[:commands].sum(&:count)
+        stats[:general].command_count
       end
     end
     expose :special do |stats|
