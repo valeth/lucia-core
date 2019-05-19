@@ -35,7 +35,7 @@ module Score
 
     # @return DiscordUser
     def user
-      DiscordUser[uid]
+      Discord::User[uid]
     end
   end
 end

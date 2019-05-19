@@ -9,7 +9,7 @@ class Donor
   field :avatar, as: :fallback_avatar, type: String
 
   def user
-    @user ||= DiscordUser
+    @user ||= Discord::User
       .get(duid, fallback_avatar_url: fallback_avatar, fallback_name: fallback_name)
   end
 end

@@ -127,7 +127,7 @@ end
 
 # This stubs user ID lookups to Discord
 def discord_user_fetcher_stub
-  temp = Addressable::Template::new("#{DiscordUserFetcher::BASE_URL}/users/{uid}")
+  temp = Addressable::Template::new("#{Discord::API::BASE_URL}users/{uid}")
   stub_request(:any, temp)
     .to_return do |request|
       uid = request.uri.path.split("/").last
