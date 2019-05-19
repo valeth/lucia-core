@@ -3,41 +3,55 @@
 require_dependency "discord_user_fetcher"
 
 class DiscordUser
-  attr_accessor :id
-  attr_accessor :data
+  attr_reader :id
+  attr_reader :discriminator
 
-  def initialize(uid, data)
+  def initialize(uid, data, **options)
     @id = uid
-    @data = data
+    @name = data["username"]
+    @discriminator = data["discriminator"]
+    @avatar_id = data["avatar"]
+    @fallbacks = {
+      avatar_url: options.fetch(:fallback_avatar_url, "https://i.imgur.com/QnYSlld.png"),
+      name: options.fetch(:fallback_name, "{Unknown}")
+    }
   end
 
-  def self.cached_data(uid)
-    data = Rails.cache.fetch("#{uid}-discord-user", expires_in: 5.minutes) do
-      DiscordUserFetcher.fetch(uid)
-    end
-
-    new(uid, data)
-  end
-
-  def avatar_url(fallback: "https://i.imgur.com/QnYSlld.png")
-    aid = data["avatar"]
-    if aid
-      ext = aid.start_with?("a_") ? ".gif" : ".png"
-      "https://cdn.discordapp.com/avatars/#{id}/#{aid}#{ext}"
+  def avatar_url
+    if @avatar_id
+      ext = @avatar_id.start_with?("a_") ? ".gif" : ".png"
+      "https://cdn.discordapp.com/avatars/#{id}/#{@avatar_id}#{ext}"
     else
-      fallback
+      @fallbacks[:avatar_url]
     end
   end
 
-  def discriminator
-    data.fetch("discriminator", nil)
+  def name
+    @name || @fallbacks[:name]
   end
 
-  def name(fallback: "{Unknown}")
-    data.fetch("username", fallback)
+  def to_h
+    { id: @id, name: @name, discriminator: @discriminator, avatar_url: avatar_url }
   end
 
-  def make_data
-    { Name: name, Discriminator: discriminator, UserID: id, Avatar: avatar_url }
+  class << self
+    def get(uid, **options)
+      user_data = fetch_user_data(uid, cached: options.fetch(:cached, true))
+      new(uid, user_data, **options)
+    end
+
+    alias [] get
+
+  private
+
+    def fetch_user_data(uid, cached: true)
+      expiration = Rails.env.development? ? 5.seconds : 5.minutes
+      fetcher = proc { DiscordUserFetcher.fetch(uid) }
+      if cached
+        Rails.cache.fetch("#{uid}-discord-user", expires_in: expiration, &fetcher)
+      else
+        fetcher.call
+      end
+    end
   end
 end

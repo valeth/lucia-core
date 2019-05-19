@@ -14,10 +14,13 @@ RSpec.describe ::API::V1::Sigma::Donors do
       result = JSON.parse(response.body)
       expect(result.size).to eq(1)
       expect(result).to eq [{
-        "duid" => 217078934976724992,
         "tier" => 1,
-        "name" => "Test217078934976724992",
-        "avatar" => "https://cdn.discordapp.com/avatars/217078934976724992/8342729096ea3675442027381ff50dfe.png"
+        "user" => {
+          "id" => 217078934976724992,
+          "name" => "Test217078934976724992",
+          "avatar_url" => "https://cdn.discordapp.com/avatars/217078934976724992/8342729096ea3675442027381ff50dfe.png",
+          "discriminator" => "4992"
+        }
       }]
     end
   end

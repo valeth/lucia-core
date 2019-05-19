@@ -8,17 +8,8 @@ class Donor
   field :name, as: :fallback_name, type: String
   field :avatar, as: :fallback_avatar, type: String
 
-  def avatar
-    user.avatar_url(fallback: fallback_avatar)
-  end
-
-  def name
-    user.name(fallback: fallback_name)
-  end
-
-private
-
   def user
-    DiscordUser.cached_data(duid)
+    @user ||= DiscordUser
+      .get(duid, fallback_avatar_url: fallback_avatar, fallback_name: fallback_name)
   end
 end

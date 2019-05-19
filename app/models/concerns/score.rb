@@ -33,9 +33,9 @@ module Score
       req != score ? req : req + 1
     end
 
-    # @return User
-    def user_data
-      DiscordUser.cached_data(uid).make_data
+    # @return DiscordUser
+    def user
+      DiscordUser[uid]
     end
   end
 end

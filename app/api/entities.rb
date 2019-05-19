@@ -35,15 +35,20 @@ module Entities
     expose :commands, using: BotCommand
   end
 
-  class Donor < Grape::Entity
+  class DiscordUser < Grape::Entity
     expose :name
-    expose :duid
+    expose :discriminator
+    expose :id
+    expose :avatar_url
+  end
+
+  class Donor < Grape::Entity
     expose :tier
-    expose :avatar
+    expose :user, using: DiscordUser
   end
 
   class Score < Grape::Entity
-    expose :user_data, as: :user
+    expose :user, using: DiscordUser
     expose :score, as: :value
     expose :level do
       expose :current_level, as: :curr
