@@ -2,18 +2,6 @@ require "rails_helper"
 
 RSpec.describe ::API::V1::Sigma::Stats do
   context "GET /rest/v1/sigma/stats" do
-    before do
-      %w[givecookie hunt fish].each do |cmd|
-        CommandStatistic.create(command: cmd, count: rand(1000))
-      end
-
-      %w[ready dbinit command].each do |evt|
-        EventStatistic.create(event: evt, count: rand(1000))
-      end
-
-      GeneralStatistic.create(name: "population", guild_count: 3, channel_count: 20, member_count: 100)
-    end
-
     it "returns current usage statistics" do
       get "/rest/v1/sigma/stats"
 

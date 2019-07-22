@@ -2,12 +2,6 @@ require "rails_helper"
 
 RSpec.describe ::API::V1::Sigma::Donors do
   context "GET /rest/v1/sigma/donors" do
-    before do
-      Donor.find_or_create_by(duid: 217078934976724992) do |m|
-        m.tier = 1
-      end
-    end
-
     it "returns a list of donors" do
       get "/rest/v1/sigma/donors"
       expect(response.status).to eq(200)

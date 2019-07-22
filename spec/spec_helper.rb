@@ -114,13 +114,11 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)
+    Rails.application.load_seed
   end
 
   config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
-
+    example.run
     discord_user_fetcher_stub
   end
 end
