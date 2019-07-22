@@ -6,9 +6,9 @@ module Types
 
     field :commands, [Types::Sigma::CommandType], null: false do
       description "List of bot commands"
-      argument :nsfw, Types::CommandFilter, required: false, default_value: :include
-      argument :admin, Types::CommandFilter, required: false, default_value: :include
-      argument :partner, Types::CommandFilter, required: false, default_value: :include
+      argument :nsfw, Types::Sigma::CommandFilter, required: false, default_value: :include
+      argument :admin, Types::Sigma::CommandFilter, required: false, default_value: :include
+      argument :partner, Types::Sigma::CommandFilter, required: false, default_value: :include
     end
 
     field :modules, [Types::Sigma::CommandCategoryType], null: false
