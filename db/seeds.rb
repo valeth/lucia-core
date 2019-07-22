@@ -23,6 +23,7 @@ if Rails.env.development? || Rails.env.test?
 
   Donor.find_or_create_by(duid: 217078934976724992) do |m|
     m.tier = 1
+    m.name = "Test217078934976724992"
   end
 
   # Leaderboards
