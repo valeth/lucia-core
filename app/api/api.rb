@@ -2,7 +2,6 @@
 
 class API < Grape::API
   format :json
-  prefix :rest
 
   before do
     header "Cache-Control", "public,max-age=0,must-revalidate"

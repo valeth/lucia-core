@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  mount API => "/"
+  post "/graphql", to: "graphql#execute"
+  mount API => "/rest"
 end

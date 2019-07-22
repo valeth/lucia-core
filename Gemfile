@@ -15,6 +15,7 @@ gem "mongoid", "~> 7.0.1"
 gem "grape", "~> 1.2"
 gem "grape-entity", "~> 0.7"
 gem "yajl-ruby"
+gem "graphql", "~> 1.9"
 
 # -------[ Cache ]-------
 gem "hiredis"
