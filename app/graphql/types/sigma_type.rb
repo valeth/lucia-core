@@ -19,14 +19,7 @@ module Types
     end
 
     def leaderboard(resource:, guild_id:)
-      res =
-        if guild_id
-          resource.where(:"origins.guilds.#{guild_id}".exists => true)
-        else
-          resource.all
-        end
-
-      res.limit(20).desc(:score)
+      guild_id ? resource.by_guild_id(guild_id) : resource.get
     end
 
     def modules

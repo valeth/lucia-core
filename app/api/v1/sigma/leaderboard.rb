@@ -1,26 +1,11 @@
 # frozen_string_literal: true
 
 class API::V1::Sigma::Leaderboard < Grape::API
-  helpers do
-    def list_scores
-      resource =
-        case params[:kind]
-        when "currency" then CurrencySystem
-        when "experience" then ExperienceSystem
-        when "cookies" then Cookie
-        end
-      scores = if params[:filter]
-        filter = params[:filter]
-        resource
-          .where(:"origins.guilds.#{filter[:guild_id]}".exists => true)
-          .limit(20)
-          .desc(:score)
-      else
-        resource.all.limit(20).desc(:score)
-      end
-      present scores, with: ::Entities::Score
-    end
-  end
+  SCOREBOARDS = {
+    "currency" => CurrencySystem,
+    "experience" => ExperienceSystem,
+    "cookies" => Cookie
+  }.freeze
 
   namespace :leaderboard do
     params do
@@ -34,7 +19,10 @@ class API::V1::Sigma::Leaderboard < Grape::API
     end
 
     get ":kind" do
-      list_scores
+      resource = SCOREBOARDS[params[:kind]]
+      gid = params.dig(:filter, :guild_id)
+      scores = gid ? resource.by_guild_id(gid) : resource.get
+      present scores, with: ::Entities::Score
     end
   end
 end
