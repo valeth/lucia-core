@@ -13,6 +13,22 @@ module Types
 
     field :modules, [Types::Sigma::CommandCategoryType], null: false
 
+    field :leaderboard, [Types::Sigma::LeaderboardEntryType], null: false do
+      argument :type, Types::Sigma::LeaderboardKind, required: true, as: :resource
+      argument :guild_id, GraphQL::Types::BigInt, required: false, default_value: nil
+    end
+
+    def leaderboard(resource:, guild_id:)
+      res =
+        if guild_id
+          resource.where(:"origins.guilds.#{guild_id}".exists => true)
+        else
+          resource.all
+        end
+
+      res.limit(20).desc(:score)
+    end
+
     def modules
       CommandCategory.all
     end
