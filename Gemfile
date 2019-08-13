@@ -5,7 +5,7 @@ ruby "~> 2.6"
 # -------[ Core ]-------
 gem "rails", "~> 5.1.6"
 gem "rack-handlers"
-gem "dotenv-rails", "~> 2.2"
+gem "dotenv-rails", "~> 2.4", ">= 2.4.0"
 gem "unicorn", platforms: %i[ruby]
 
 # -------[ Database ]-------
@@ -20,7 +20,7 @@ gem "graphql", "~> 1.9"
 # -------[ Cache ]-------
 gem "hiredis"
 gem "redis", "~> 4.0", require: ["redis", "redis/connection/hiredis"]
-gem "redis-rails"
+gem "redis-rails", ">= 5.0.2"
 
 # -------[ Jobs ]-------
 gem "childprocess", "~> 0.9"
@@ -39,7 +39,7 @@ end
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
-  gem "rspec-rails", "~> 3.8"
+  gem "rspec-rails", "~> 3.8", ">= 3.8.0"
 end
 
 group :development do
