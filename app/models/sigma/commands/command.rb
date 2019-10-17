@@ -17,6 +17,14 @@ class Command
 
   validates :name, presence: true, uniqueness: true
 
+  def self.find_by_name_or_desc(query, **params)
+    where("$or" => [
+        { name: /#{query}/i },
+        { desc: /#{query}/i },
+        { alts: { "$in": [/#{query}/i] } }
+      ], **params)
+  end
+
   def usage
     self[:usage].sub("{pfx}", ">>").sub("{cmd}", name)
   end
