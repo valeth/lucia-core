@@ -6,7 +6,7 @@ module Types
       description "Various information about Sigma"
     end
 
-    field :modules, [Types::Sigma::CommandCategoryType], null: false
+    field :command_categories, [Types::Sigma::CommandCategoryType], null: false
 
     field :leaderboard, [Types::Sigma::LeaderboardEntryType], null: false do
       argument :type, Types::Sigma::LeaderboardKind, required: true, as: :resource
@@ -17,7 +17,7 @@ module Types
       guild_id ? resource.by_guild_id(guild_id) : resource.get
     end
 
-    def modules
+    def command_categories
       CommandCategory.all
     end
 
