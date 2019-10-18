@@ -41,7 +41,7 @@ RSpec.describe ::LuciaCoreSchema do
       query = <<~GRAPHQL
         query {
           sigma {
-            modules {
+            commandCategories {
               name
               commands { name }
             }
@@ -51,12 +51,11 @@ RSpec.describe ::LuciaCoreSchema do
 
       expected_result = {
         "sigma" => {
-          "modules" => [
+          "commandCategories" => [
             {
               "name" => "test",
               "commands" => [
                 { "name" => "hello" },
-                { "name" => "help" }
               ]
             }
           ]
