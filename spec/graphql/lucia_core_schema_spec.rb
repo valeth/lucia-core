@@ -55,7 +55,7 @@ RSpec.describe ::LuciaCoreSchema do
             {
               "name" => "test",
               "commands" => [
-                { "name" => "hello" },
+                { "name" => "hello" }
               ]
             }
           ]
@@ -73,14 +73,11 @@ RSpec.describe ::LuciaCoreSchema do
         }
       GRAPHQL
 
-      expected_result = {
-        "donors" => [
-          { "name" => "Test217078934976724992" }
-        ]
-      }
-
       result = described_class.execute(query)
-      expect(result["data"]).to eq(expected_result)
+      expect(result["data"])
+        .to include(
+          "donors" => all(include("name" => a_string_matching(/^Test\d+$/)))
+        )
     end
   end
 end

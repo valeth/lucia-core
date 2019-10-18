@@ -21,9 +21,11 @@ if Rails.env.development? || Rails.env.test?
     c.admin = true
   end
 
-  Donor.find_or_create_by(duid: 217078934976724992) do |m|
-    m.tier = 1
-    m.name = "Test217078934976724992"
+  [217078934976724992, 217078934976725000, 217078934976725001, 217078934976725002].each do |id|
+    Donor.find_or_create_by(duid: id) do |m|
+      m.tier = [1, 2].sample
+      m.name = "Test#{id}"
+    end
   end
 
   # Leaderboards

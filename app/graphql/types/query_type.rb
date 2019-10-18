@@ -2,10 +2,16 @@ module Types
   class QueryType < Types::BaseObject
     field :sigma, Types::SigmaType, null: true
 
-    field :donors, [Types::Sigma::DonorType], null: false
+    field :donors, [Types::Sigma::DonorType], null: false do
+      argument :tier, Integer, required: false
+    end
 
-    def donors
-      Donor.all.desc(:tier)
+    def donors(tier: nil)
+      if tier
+        Donor.where(tier: tier)
+      else
+        Donor.all.desc(:tier)
+      end
     end
 
     def sigma

@@ -6,16 +6,18 @@ RSpec.describe ::API::V1::Sigma::Donors do
       get "/rest/v1/sigma/donors"
       expect(response.status).to eq(200)
       result = JSON.parse(response.body)
-      expect(result.size).to eq(1)
-      expect(result).to eq [{
-        "tier" => 1,
-        "user" => {
-          "id" => 217078934976724992,
-          "name" => "Test217078934976724992",
-          "avatar_url" => "https://cdn.discordapp.com/avatars/217078934976724992/8342729096ea3675442027381ff50dfe.png",
-          "discriminator" => "4992"
-        }
-      }]
+      expect(result.size).to eq(4)
+
+      expect(result)
+        .to all(include(
+          "tier" => be_an(Integer),
+          "user" => include(
+            "id" => be_an(Integer),
+            "name" => a_string_matching(/^Test\d+$/),
+            "avatar_url" => a_string_matching(%r{https://cdn.discordapp.com/avatars/\d+/[0-9a-f]+\.png}),
+            "discriminator" => a_string_matching(/\d{4}/)
+          )
+        ))
     end
   end
 end
