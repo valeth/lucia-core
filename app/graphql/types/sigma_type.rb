@@ -13,12 +13,18 @@ module Types
       argument :guild_id, GraphQL::Types::BigInt, required: false, default_value: nil
     end
 
+    field :stats, Types::Sigma::StatsSetType, null: false
+
     def leaderboard(resource:, guild_id:)
       guild_id ? resource.by_guild_id(guild_id) : resource.get
     end
 
     def command_categories
       CommandCategory.all
+    end
+
+    def stats
+      {}
     end
 
     def info

@@ -13,6 +13,18 @@ class GeneralStatistic
   field :member_count, type: Integer
 
   class << self
+    def total_guilds
+      where(name: :population).sum(:guild_count)
+    end
+
+    def total_channels
+      where(name: :population).sum(:channel_count)
+    end
+
+    def total_members
+      where(name: :population).sum(:member_count)
+    end
+
     # rubocop:disable Style/MultilineBlockChain
     def collect_stats
       where(name: :population)
@@ -29,7 +41,7 @@ class GeneralStatistic
     # rubocop:enable Style/MultilineBlockChain
 
     def command_count
-      CommandStatistic.all.pluck(:count).sum
+      CommandStatistic.total_commands_executed
     end
   end
 end
