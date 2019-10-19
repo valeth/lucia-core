@@ -5,40 +5,38 @@ require "rails_helper"
 RSpec.describe ::LuciaCoreSchema do
   describe ".execute" do
     it "can query bot information" do
-      query = <<~GRAPHQL
+      result = described_class.execute <<~GRAPHQL
         query {
           sigma {
             info {
-              codename
               beta
               buildDate
+              codename
               version { major minor patch }
             }
           }
         }
       GRAPHQL
 
-      expected_result = {
-        "sigma" => {
-          "info" => {
-            "codename" => "Vueko",
-            "beta" => true,
-            "buildDate" => 1556274480,
-            "version" => {
-              "major" => 4,
-              "minor" => 1,
-              "patch" => 666
-            }
-          }
-        }
-      }
-
-      result = described_class.execute(query)
-      expect(result["data"]).to eq(expected_result)
+      expect(result["data"])
+        .to include(
+          "sigma" => include(
+            "info" => include(
+              "beta" => true,
+              "buildDate" => be_an(Integer),
+              "codename" => be_a(String),
+              "version" => include(
+                "major" => be_an(Integer),
+                "minor" => be_an(Integer),
+                "patch" => be_an(Integer)
+              )
+            )
+          )
+        )
     end
 
     it "can query bot modules and commands" do
-      query = <<~GRAPHQL
+      result = described_class.execute <<~GRAPHQL
         query {
           sigma {
             commandCategories {
@@ -49,21 +47,17 @@ RSpec.describe ::LuciaCoreSchema do
         }
       GRAPHQL
 
-      expected_result = {
-        "sigma" => {
-          "commandCategories" => [
-            {
-              "name" => "test",
-              "commands" => [
-                { "name" => "hello" }
-              ]
-            }
-          ]
-        }
-      }
-
-      result = described_class.execute(query)
-      expect(result["data"]).to eq(expected_result)
+      expect(result["data"])
+        .to include(
+          "sigma" => include(
+            "commandCategories" => all(include(
+              "name" => be_a(String),
+              "commands" => all(include(
+                "name" => be_a(String)
+              ))
+            ))
+          )
+        )
     end
 
     it "can query names of donors" do
@@ -76,7 +70,9 @@ RSpec.describe ::LuciaCoreSchema do
       result = described_class.execute(query)
       expect(result["data"])
         .to include(
-          "donors" => all(include("name" => a_string_matching(/^Test\d+$/)))
+          "donors" => all(include(
+            "name" => a_string_matching(/^Test\d+$/)
+          ))
         )
     end
   end
