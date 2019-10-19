@@ -12,6 +12,5 @@ class LuciaCoreSchema < GraphQL::Schema
     query_analyzer(query_depth_logger)
   end
 
-  mutation Types::MutationType
   query Types::QueryType
 end
