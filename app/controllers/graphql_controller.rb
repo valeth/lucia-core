@@ -1,4 +1,6 @@
 class GraphqlController < ApplicationController
+  rescue_from StandardError, with: :error_logger
+
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
@@ -6,13 +8,20 @@ class GraphqlController < ApplicationController
 
     result = LuciaCoreSchema.execute(query, variables: variables, operation_name: operation_name)
     render json: result
-  rescue => e
-    raise e unless Rails.env.development?
-
-    handle_error_in_development e
   end
 
 private
+
+  def error_logger(err)
+    logger.error err.message
+
+    if Rails.env.development?
+      logger.error err.backtrace.join("\n")
+      render json: { error: { message: err.message, backtrace: err.backtrace }, data: {} }, status: 500
+    else
+      render json: { error: { message: "GraphQL query execution failed" }, data: {} }, status: 500
+    end
+  end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
@@ -30,12 +39,5 @@ private
     else
       raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
     end
-  end
-
-  def handle_error_in_development(err)
-    logger.error err.message
-    logger.error err.backtrace.join("\n")
-
-    render json: { error: { message: err.message, backtrace: err.backtrace }, data: {} }, status: 500
   end
 end
