@@ -21,6 +21,9 @@ Layout/EndAlignment:
   Enabled: true
   EnforcedStyleAlignWith: variable
 
+Layout/FirstParameterIndentation:
+  Enabled: false
+
 Layout/CaseIndentation:
   Enabled: true
 
@@ -44,6 +47,9 @@ Layout/IndentationConsistency:
 
 Layout/IndentationWidth:
   Enabled: true
+
+Layout/IndentArray:
+  Enabled: false
 
 Layout/SpaceAfterColon:
   Enabled: true
