@@ -21,6 +21,15 @@ if Rails.env.development? || Rails.env.test?
     c.admin = true
   end
 
+  cat2 = CommandCategory.find_or_create_by(name: "another")
+  cat2.commands << Command.find_or_create_by(name: "poke") do |c|
+    c.desc = "POKE!"
+    c.nsfw = false
+    c.partner = false
+    c.admin = false
+    c.alts = %w[finger stick]
+  end
+
   [217078934976724992, 217078934976725000, 217078934976725001, 217078934976725002].each do |id|
     Donor.find_or_create_by(duid: id) do |m|
       m.tier = [1, 2].sample

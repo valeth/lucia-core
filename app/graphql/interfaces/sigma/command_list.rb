@@ -18,9 +18,9 @@ module Interfaces::Sigma
       params[:partner] = false if partner == :exclude
 
       if regex
-        Command.find_by_name_or_desc(regex, **params)
+        object.commands.find_by_name_or_desc(regex, **params)
       else
-        Command.where(**params)
+        object.commands.where(**params)
       end
     end
   end

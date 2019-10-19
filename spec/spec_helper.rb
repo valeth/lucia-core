@@ -123,6 +123,12 @@ RSpec.configure do |config|
   end
 end
 
+RSpec::Matchers.define :be_boolean do
+  match do |actual|
+    expect(actual).to be_in([true, false])
+  end
+end
+
 # This stubs user ID lookups to Discord
 def discord_user_fetcher_stub
   temp = Addressable::Template::new("#{Discord::API::BASE_URL}users/{uid}")

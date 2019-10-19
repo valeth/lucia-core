@@ -1,3 +1,5 @@
+require "ostruct"
+
 module Types
   class QueryType < Types::BaseObject
     field :sigma, Types::SigmaType, null: true
@@ -15,7 +17,7 @@ module Types
     end
 
     def sigma
-      {}
+      OpenStruct.new(commands: Command)
     end
   end
 end
