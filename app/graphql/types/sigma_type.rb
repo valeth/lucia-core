@@ -9,13 +9,14 @@ module Types
     field :command_categories, [Types::Sigma::CommandCategoryType], null: false
 
     field :leaderboard, [Types::Sigma::LeaderboardEntryType], null: false do
-      argument :type, Types::Sigma::LeaderboardKind, required: true, as: :resource
-      argument :guild_id, GraphQL::Types::BigInt, required: false, default_value: nil
+      argument :type, String, required: true
+      argument :guild_id, GraphQL::Types::BigInt, required: false
     end
 
     field :stats, Types::Sigma::StatsSetType, null: false
 
-    def leaderboard(resource:, guild_id:)
+    def leaderboard(type:, guild_id: nil)
+      resource = Resource[type]
       guild_id ? resource.by_guild_id(guild_id) : resource.get
     end
 
