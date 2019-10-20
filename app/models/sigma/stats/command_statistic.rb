@@ -2,6 +2,7 @@
 
 class CommandStatistic
   include Mongoid::Document
+  include Filterable
 
   store_in collection: "CommandStats"
 
@@ -13,16 +14,6 @@ class CommandStatistic
   end
 
   class << self
-    def filtered(**criteria)
-      if criteria.key?(:only)
-        self.in(name: criteria[:only])
-      elsif criteria.key?(:except)
-        not_in(name: criteria[:except])
-      else
-        all
-      end
-    end
-
     def total_commands_executed
       CommandStatistic.all.pluck(:count).sum
     end

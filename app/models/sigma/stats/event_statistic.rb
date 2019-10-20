@@ -2,21 +2,12 @@
 
 class EventStatistic
   include Mongoid::Document
+  include Filterable
 
   store_in collection: "EventStats"
 
   field :event, as: :name, type: String
   field :count, type: Integer
-
-  def self.filtered(**criteria)
-    if criteria.key?(:only)
-      self.in(name: criteria[:only])
-    elsif criteria.key?(:except)
-      not_in(name: criteria[:except])
-    else
-      all
-    end
-  end
 
   def to_list_entry
     { event.to_sym => count }

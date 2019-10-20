@@ -145,5 +145,49 @@ RSpec.describe ::LuciaCoreSchema do
           )
       end
     end
+
+    it "can filter command statistics" do
+      result = described_class.execute <<~GRAPHQL
+        query {
+          sigma {
+            stats {
+              commands(only: ["hunt"]) { name }
+              events(only: ["ready"]) { name }
+            }
+          }
+        }
+      GRAPHQL
+
+      expect(result["data"])
+        .to eq(
+          "sigma" => {
+            "stats" => {
+              "commands" => [{ "name" => "hunt" }],
+              "events" => [{ "name" => "ready" }]
+            }
+          }
+        )
+
+      result = described_class.execute <<~GRAPHQL
+        query {
+          sigma {
+            stats {
+              commands(except: ["hunt", "fish"]) { name }
+              events(except: ["ready", "dbinit"]) { name }
+            }
+          }
+        }
+      GRAPHQL
+
+      expect(result["data"])
+        .to eq(
+          "sigma" => {
+            "stats" => {
+              "commands" => [{ "name" => "givecookie" }],
+              "events" => [{ "name" => "command" }]
+            }
+          }
+        )
+    end
   end
 end

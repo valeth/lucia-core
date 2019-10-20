@@ -2,6 +2,7 @@
 
 class SpecialStatistic
   include Mongoid::Document
+  include Filterable
 
   store_in collection: "SpecialStats"
 
