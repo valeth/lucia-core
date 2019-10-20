@@ -12,5 +12,7 @@ class LuciaCoreSchema < GraphQL::Schema
     query_analyzer(query_depth_logger)
   end
 
+  disable_introspection_entry_points if Rails.env.production?
+
   query Types::QueryType
 end
