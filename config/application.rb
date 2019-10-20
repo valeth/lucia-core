@@ -23,6 +23,9 @@ module LuciaCore
     redis_url = ENV.fetch("REDIS_URL") { "redis://localhost:6379/0/cache" }
     config.cache_store = :redis_store, redis_url, { expires_in: 1.day }
 
+    # Loads config/lucia.yml
+    config.lucia = config_for(:lucia)
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

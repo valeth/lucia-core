@@ -1,0 +1,18 @@
+default: &default
+  # Sets if the authentication token can be immediately reused
+  token_resuable: false
+
+  # Time for the token reuse cache to expire, in seconds (min: 1)
+  token_expiration_time: 1
+
+development:
+  <<: *default
+  token_reusable: false
+
+test:
+  <<: *default
+  token_reusable: true
+
+production:
+  <<: *default
+  token_expiration_time: 60
