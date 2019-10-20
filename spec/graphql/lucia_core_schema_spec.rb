@@ -133,13 +133,13 @@ RSpec.describe ::LuciaCoreSchema do
           .to include(
             "sigma" => include(
               "stats" => include(
-                "commands" => all(include("name" => be_a(String), "count" => be_a(Integer))),
-                "events" => all(include("name" => be_a(String), "count" => be_a(Integer))),
-                "special" => all(include("name" => be_a(String), "count" => be_a(Integer))),
-                "commandCount" => be_a(Integer),
-                "guildCount" => be_a(Integer),
-                "channelCount" => be_a(Integer),
-                "memberCount" => be_a(Integer),
+                "commands" => all(include("name" => be_a(String), "count" => be_a(String))),
+                "events" => all(include("name" => be_a(String), "count" => be_a(String))),
+                "special" => all(include("name" => be_a(String), "count" => be_a(String))),
+                "commandCount" => be_a(String),
+                "guildCount" => be_a(String),
+                "channelCount" => be_a(String),
+                "memberCount" => be_a(String),
               )
             )
           )

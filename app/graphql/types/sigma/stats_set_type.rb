@@ -15,10 +15,10 @@ module Types::Sigma
       argument :except, [String], required: false
     end
 
-    field :guild_count, Integer, null: false
-    field :channel_count, Integer, null: false
-    field :member_count, Integer, null: false
-    field :command_count, Integer, null: false
+    field :guild_count, GraphQL::Types::BigInt, null: false
+    field :channel_count, GraphQL::Types::BigInt, null: false
+    field :member_count, GraphQL::Types::BigInt, null: false
+    field :command_count, GraphQL::Types::BigInt, null: false
 
     def commands(only: [], except: [])
       get_statistic(CommandStatistic, only: only, except: except)
