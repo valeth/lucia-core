@@ -59,6 +59,7 @@ module Score
     end
   end
 
+  # rubocop: disable Lint/UselessAccessModifier
   class_methods do
     def by_guild_id(gid, amount: 20)
       where(:"origins.guilds.#{gid}".exists => true)
@@ -76,4 +77,5 @@ module Score
     attr_writer :suffixes
     attr_writer :leveler
   end
+  # rubocop: enable Lint/UselessAccessModifier
 end
