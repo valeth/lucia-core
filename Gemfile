@@ -30,6 +30,7 @@ gem "sidekiq-scheduler"
 # -------[ Misc ]-------
 gem "rest-client"
 gem "addressable", "~> 2.6"
+gem "rack-cors", require: "rack/cors"
 
 group :test do
   gem "database_cleaner", "~> 1.7"
@@ -48,6 +49,5 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "rubocop", "0.67.2", require: false
   gem "pry-rails"
-  gem "rack-cors", require: "rack/cors"
   gem "puma"
 end
