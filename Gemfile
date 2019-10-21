@@ -29,11 +29,11 @@ gem "sidekiq-scheduler"
 
 # -------[ Misc ]-------
 gem "rest-client"
+gem "addressable", "~> 2.6"
 
 group :test do
   gem "database_cleaner", "~> 1.7"
   gem "webmock", "~> 3.5"
-  gem "addressable", "~> 2.6"
   gem "simplecov", "~> 0.16", require: false
 end
 
