@@ -1,4 +1,5 @@
 AllCops:
+  DisabledByDefault: true
   DisplayCopNames: true
   DisplayStyleGuide: false
   StyleGuideCopsOnly: false
@@ -18,11 +19,7 @@ Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
 
 Layout/EndAlignment:
-  Enabled: true
   EnforcedStyleAlignWith: variable
-
-Layout/FirstParameterIndentation:
-  Enabled: false
 
 Layout/CaseIndentation:
   Enabled: true
@@ -47,9 +44,6 @@ Layout/IndentationConsistency:
 
 Layout/IndentationWidth:
   Enabled: true
-
-Layout/IndentArray:
-  Enabled: false
 
 Layout/SpaceAfterColon:
   Enabled: true
@@ -81,11 +75,6 @@ Layout/TrailingBlankLines:
 Layout/TrailingWhitespace:
   Enabled: true
 
-Layout/MultilineMethodCallIndentation:
-  Enabled: false
-
-Layout/AlignArray:
-  Enabled: false
 
 # -------[ Lint ]-------
 
@@ -101,39 +90,18 @@ Style/AndOr:
 Style/BracesAroundHashParameters:
   Enabled: true
 
-Style/EmptyMethod:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 Style/HashSyntax:
   Enabled: true
-
-Style/NumericLiterals:
-  Enabled: false
 
 Style/MethodDefParentheses:
   Enabled: true
 
 Style/StringLiterals:
-  Enabled: true
   EnforcedStyle: double_quotes
 
 Style/UnneededPercentQ:
   Enabled: true
 
-Style/Documentation:
-  Enabled: false
-
-Style/ColonMethodCall:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/TrailingCommaInArguments:
-  Enabled: false
 
 # -------[ Metrics ]-------
 
@@ -147,14 +115,3 @@ Metrics/BlockLength:
   Max: 40
   Exclude:
     - "spec/**/*_spec.rb"
-
-Metrics/AbcSize:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Enabled: false
-
-# -------[ Bundler ]------
-
-Bundler/OrderedGems:
-  Enabled: false
