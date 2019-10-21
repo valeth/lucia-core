@@ -6,9 +6,9 @@ class ApplicationController < ActionController::API
 private
 
   def authenticate
-    token = request.headers["X-Lucia-Token"]
+    auth_type, token = request.headers["Authorization"]&.split
 
-    if token.nil? || token.empty?
+    if auth_type != "Token" || token.nil? || token.empty?
       render status: 401
     else
       validator = LuciaToken::FormatValidator.new(prefix: "lc-")
