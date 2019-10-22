@@ -13,9 +13,10 @@ Bundler.require(*Rails.groups)
 module LuciaCore
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 5.2
 
     config.autoload_paths.push(Rails.root.join("lib"), *Rails.root.glob("app/models/sigma/**/"))
+
     config.eager_load_paths.push(*config.autoload_paths.dup)
 
     config.active_job.queue_adapter = :sidekiq
