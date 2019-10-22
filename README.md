@@ -1,11 +1,27 @@
-# Lucia's Cipher API backend
+# Lucia Core
 
-Lucia's Cipher's main REST API endpoint.
+Lucia's Cipher's main API endpoint.
+
 
 ## Requirements
 
-* Ruby >= 2.5
-* MongoDB >= 3
+* Ruby >= 2.6
+* MongoDB >= 4.1
+* Redis >= 4.0 (for Cache and Sidekiq)
+
+
+## Development
+
+> It is recommended to use `docker-compose` to set up the mongodb and redis instances.
+
+First run `bundle install` to set up all necessary gems.
+
+Copy the `.env.example` file to `.env` and edit the variables to match your setup.
+
+Make sure the database is up and running, then run `bin/rake db:seed` to initialize database content for development.
+
+After that simply run `bin/rails server -u puma` to start the server.
+
 
 ## Setup (Deployment)
 
