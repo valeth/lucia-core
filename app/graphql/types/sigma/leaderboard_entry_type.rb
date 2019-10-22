@@ -1,6 +1,6 @@
 module Types::Sigma
   class LeaderboardEntryType < Types::BaseObject
-    field :user, DiscordUser, null: false
+    field :user, Types::DiscordUser, null: false
 
     field :score, Float, null: false
     field :title, String, null: false
