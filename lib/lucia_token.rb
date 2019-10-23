@@ -92,4 +92,63 @@ module LuciaToken
       raise InvalidResult unless (total % 10) == 8
     end
   end
+
+  module Authenticator
+    TOKEN_PREFIX = Rails.configuration.lucia[:token_prefix].freeze
+    CACHE_PREFIX = "lucia-token_#{Rails.env}_"
+
+    @token_cache = Rails.cache
+    @validator = LuciaToken::FormatValidator.new(prefix: TOKEN_PREFIX)
+
+  module_function
+
+    def authenticate(token)
+      validate_token(token)
+      mark_token_as_used(token)
+      nil
+    end
+
+    def token_reusable?
+      @token_reusable ||= Rails.configuration.lucia[:token_reusable]
+    end
+
+    def token_expiration_time
+      @token_expiration_time ||= [Rails.configuration.lucia[:token_expiration_time], 1].max.seconds
+    end
+
+    def validate_token(token)
+      raise TokenAlreadyUsed if token_used?(token)
+      @validator.validate(token)
+    end
+
+    def token_cache_key(token)
+      "#{CACHE_PREFIX}#{token}"
+    end
+
+    def token_used?(token)
+      return false if token_reusable?
+
+      @token_cache.exist?(token_cache_key(token))
+    end
+
+    def mark_token_as_used(token)
+      return if token_reusable?
+
+      key = token_cache_key(token)
+      @token_cache.write(key, nil, expires_in: token_expiration_time)
+    end
+
+    def mark_token_as_unused(token)
+      return if token_reusable?
+
+      key = token_cache_key(token)
+      @token_cache.delete(key)
+    end
+
+    def clear_token_cache
+      return if token_reusable?
+
+      @token_cache.delete_matched(/#{CACHE_PREFIX}.*/)
+    end
+  end
 end

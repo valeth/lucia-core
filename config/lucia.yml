@@ -3,16 +3,16 @@ default: &default
   token_resuable: false
 
   # Time for the token reuse cache to expire, in seconds (min: 1)
-  token_expiration_time: 1
+  token_expiration_time: 60
+
+  token_prefix: "lc-"
 
 development:
   <<: *default
-  token_reusable: false
+  token_expiration_time: 1
 
 test:
   <<: *default
-  token_reusable: true
 
 production:
   <<: *default
-  token_expiration_time: 60
