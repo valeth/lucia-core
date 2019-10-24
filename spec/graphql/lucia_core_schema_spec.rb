@@ -82,18 +82,9 @@ RSpec.describe ::LuciaCoreSchema do
         result = described_class.execute <<~GRAPHQL
           query {
             sigma {
-              cookies: leaderboard(type: "COOKIES") {
-                ...leaderboardItems
-              }
-              currency: leaderboard(type: "CURRENCY") {
-                ...leaderboardItems
-              }
+              cookies: leaderboard(type: "COOKIES") { score }
+              currency: leaderboard(type: "CURRENCY") { score }
             }
-          }
-
-          fragment leaderboardItems on LeaderboardEntry {
-            currentLevel
-            tier
           }
         GRAPHQL
 
@@ -101,12 +92,10 @@ RSpec.describe ::LuciaCoreSchema do
           .to include(
             "sigma" => include(
               "cookies" => all(include(
-                "tier" => be_an(Integer),
-                "currentLevel" => be_an(Integer)
+                "score" => be_an(Integer),
               )),
               "currency" => all(include(
-                "tier" => be_an(Integer),
-                "currentLevel" => be_an(Integer)
+                "score" => be_an(Integer),
               ))
             )
           )

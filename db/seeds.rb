@@ -43,7 +43,7 @@ if Rails.env.development? || Rails.env.test?
   gids = %w[200751504175398912 217081703137542145 273534239310479360 442252698964721669]
 
   ids.each.with_index(0) do |uid, i|
-    CurrencySystem.find_or_create_by(uid: uid) do |m|
+    Leaderboard[:currency].find_or_create_by(uid: uid) do |m|
       m.score = rand(10000)
       m.origins = {
         "guilds" => { gids[i % 4] => rand(99) },
@@ -52,16 +52,7 @@ if Rails.env.development? || Rails.env.test?
       }
     end
 
-    ExperienceSystem.find_or_create_by(uid: uid) do |m|
-      m.score = rand(10000)
-      m.origins = {
-        "guilds" => { gids[i % 4] => rand(99) },
-        "users" => { rand(100_000_000_000_000_000).to_s => rand(99) },
-        "channels" => { rand(100_000_000_000_000_000).to_s => rand(99) }
-      }
-    end
-
-    Cookie.find_or_create_by(uid: uid) do |m|
+    Leaderboard[:cookies].find_or_create_by(uid: uid) do |m|
       m.score = rand(20)
       m.origins = {
         "guilds" => { gids[i % 4] => rand(99) },

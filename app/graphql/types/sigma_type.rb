@@ -16,7 +16,7 @@ module Types
     field :stats, Types::Sigma::StatsSetType, null: false
 
     def leaderboard(type:, guild_id: nil)
-      resource = Resource[type]
+      resource = Leaderboard[type]
       guild_id ? resource.by_guild_id(guild_id) : resource.get
     end
 
