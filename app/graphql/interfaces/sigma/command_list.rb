@@ -17,7 +17,7 @@ module Interfaces::Sigma
       params[:admin] = false if admin == :exclude
       params[:partner] = false if partner == :exclude
 
-      if regex
+      if regex.present?
         object.commands.find_by_name_or_desc(regex, **params)
       else
         object.commands.where(**params)
