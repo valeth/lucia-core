@@ -1,7 +1,15 @@
 class ApplicationController < ActionController::API
   include ActionController::Caching
+  include ActionController::MimeResponds
 
-  before_action :authenticate
+  before_action :authenticate, except: :route_not_found
+
+  def route_not_found
+    respond_to do |format|
+      format.html { render status: :not_found }
+      format.json { render json: { error: "Resource not found" }, status: :not_found }
+    end
+  end
 
 private
 
