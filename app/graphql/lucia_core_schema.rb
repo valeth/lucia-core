@@ -1,11 +1,15 @@
 class LuciaCoreSchema < GraphQL::Schema
+  def self.logger
+    Logging.logger["GraphQL"]
+  end
+
   if Rails.env.development?
     query_depth_logger = GraphQL::Analysis::QueryDepth.new do |_query, depth|
-      Rails.logger.debug { "GraphQL | Query Depth = #{depth}" }
+      logger.debug { "query_depth=#{depth}" }
     end
 
     query_complexity_logger = GraphQL::Analysis::QueryComplexity.new do |_query, complexity|
-      Rails.logger.debug { "GraphQL | Query Complexity = #{complexity}" }
+      logger.debug { "query_complexity=#{complexity}" }
     end
 
     query_analyzer(query_complexity_logger)

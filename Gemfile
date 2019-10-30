@@ -8,6 +8,11 @@ gem "rack-handlers", "~> 0.7"
 gem "dotenv-rails", "~> 2.4", ">= 2.4.0"
 gem "unicorn", "~> 5.5", platforms: %i[ruby]
 
+# -------[ Logging & Error Handling ]-------
+gem "logging", "~> 2.2"
+gem "logging-rails", "~> 0.6", require: "logging/rails"
+gem "lograge", "~> 0.11"
+
 # -------[ Database ]-------
 gem "mongoid", "~> 7.0.5"
 
