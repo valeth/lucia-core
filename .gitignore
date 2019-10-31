@@ -17,8 +17,9 @@
 !/tmp/.keep
 
 .byebug_history
-/.env
 /coverage
+/.env*
+!/.env.example
 
 # IDE and editor stuff
 /.idea

@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../config/boot"
+require "pathname"
+
+APP_ROOT = Pathname(__dir__).parent.realpath.freeze
+LOG_DIR = APP_ROOT.join("log").freeze
+TMP_DIR = APP_ROOT.join("tmp").freeze
+
+unless LOG_DIR.mountpoint?
+  warn "Log directory is not a mountpoint, log files might not be persisted"
+end
+
+abort "Cannot access log directory" unless LOG_DIR.executable? && LOG_DIR.writable?
+abort "Cannot access tmp directory" unless TMP_DIR.executable? && TMP_DIR.writable?
+
+puts "=> Cleaning up temporary files"
+TMP_DIR.each_child do |file|
+  file.rmtree
+  puts " -> Removed #{file}"
+end
+
+# Print everything before exec
+STDOUT.flush
+
+if ARGV.empty?
+  exec("bin/rails", "server", "-u", "unicorn", "-b", "0.0.0.0", "-p", "3000")
+else
+  exec(*ARGV)
+end

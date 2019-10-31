@@ -30,12 +30,12 @@ RUN apk add --update --no-cache \
 
 ARG user_uid=1000
 ARG user_gid=1000
-RUN addgroup -S -g "$user_gid" app && adduser -S -G app -u "$user_uid" app
+RUN addgroup -S -g "$user_gid" app \
+ && adduser -S -G app -u "$user_uid" app \
+ && mkdir -p /app /app/tmp /app/log \
+ && chown -R app:app /app
 
-ENV APP_ROOT="/app"
-RUN mkdir -p "$APP_ROOT" && chown app:app "$APP_ROOT"
-
-WORKDIR "$APP_ROOT"
+WORKDIR /app
 USER app
 
 COPY --chown=app:app --from=build /build/vendor/bundle ./vendor/bundle
@@ -43,7 +43,5 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install --deployment --without="development test"
 COPY --chown=app:app ./ ./
 
-ENTRYPOINT ["bundle", "exec"]
-
 EXPOSE 3000
-CMD ["bin/rails", "server", "unicorn", "-b", "0.0.0.0", "-p", "3000"]
+ENTRYPOINT ["bin/docker-entrypoint"]

@@ -28,7 +28,7 @@ services:
       - "sidekiq:/data"
 
   web:
-    image: "lucia-core:latest"
+    image: "lucia-core:develop"
     build:
       context: ./
     env_file: ".env"
@@ -38,14 +38,11 @@ services:
       UNICORN_SIDEKIQ: "1"
       REDIS_URL: "redis://redis_cache:6379/0"
       SIDEKIQ_REDIS_URL: "redis://redis_sidekiq:6379/0"
-      MONGOID_DEFAULT_HOST: "database:27017"
       MONGOID_SIGMA_HOST: "database:27017"
     ports:
       - "3000:3000"
     volumes:
-      - type: tmpfs
-        target: /tmp
-      - "/tmp/sysmon.sock:/tmp/sysmon.sock"
+      - "./tmp/container_log:/app/log"
     depends_on:
       - "database"
       - "redis_cache"
