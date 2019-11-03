@@ -12,7 +12,7 @@ module Logging::Context
 
       ctx =
         if raw_log.first == hostname
-         prepare_query_context(*raw_log[1..])
+          prepare_query_context(*raw_log[1..])
         else
           raw_log.join(" | ")
         end
