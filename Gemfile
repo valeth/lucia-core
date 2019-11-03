@@ -11,7 +11,7 @@ gem "unicorn", "~> 5.5", platforms: %i[ruby]
 # -------[ Logging & Error Handling ]-------
 gem "logging", "~> 2.2"
 gem "logging-rails", "~> 0.6", require: "logging/rails"
-gem "lograge", "~> 0.11"
+gem "lograge", "~> 0.11", ">= 0.11.0"
 
 # -------[ Database ]-------
 gem "mongoid", "~> 7.0.5"
