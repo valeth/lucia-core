@@ -373,6 +373,7 @@ DEPENDENCIES
   simplecov (~> 0.17)
   spring
   spring-watcher-listen (~> 2.0.0)
+  tzinfo-data
   unicorn (~> 5.5)
   webmock (~> 3.5)
   yajl-ruby (~> 1.4)

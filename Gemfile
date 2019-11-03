@@ -38,6 +38,9 @@ gem "rack-cors", "~> 1.0", require: "rack/cors"
 gem "dry-struct", "~> 1.0"
 gem "discordrb", "~> 3.3"
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+
 group :test do
   gem "database_cleaner", "~> 1.7"
   gem "webmock", "~> 3.5"
