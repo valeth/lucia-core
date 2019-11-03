@@ -2,6 +2,7 @@
 
 Logging::Rails.configure do |config|
   LOGGER_PATTERN = "timestamp=%d loglevel=%l logname=%c %m\n"
+  DATE_PATTERN = "%FT%T%:z"
 
   # Configure the Logging framework with the default log levels
   Logging.init %w[debug info warn error fatal]
@@ -9,7 +10,8 @@ Logging::Rails.configure do |config|
   # Objects will be converted to strings using the :inspect method.
   Logging.format_as :inspect
 
-  Logging.backtrace false
+  # Always use UTC time
+  Logging.utc_offset = 0
 
   # Setup a color scheme called 'bright' than can be used to add color codes
   # to the pattern layout. Color schemes should only be used with appenders
@@ -33,7 +35,8 @@ Logging::Rails.configure do |config|
   # writing.
   Logging.appenders.stdout("stdout",
     auto_flushing: true,
-    layout: Logging.layouts.pattern(pattern: LOGGER_PATTERN, color_scheme: "bright")
+    layout: Logging.layouts.pattern(pattern: LOGGER_PATTERN, date_pattern: DATE_PATTERN, color_scheme: "bright"),
+    backtrace: :off
   ) if config.log_to.include? "stdout"
 
   # Configure an appender that will write log events to a file. The file will
@@ -46,7 +49,7 @@ Logging::Rails.configure do |config|
     age: "daily",
     truncate: false,
     auto_flushing: true,
-    layout: Logging.layouts.pattern(pattern: LOGGER_PATTERN)
+    layout: Logging.layouts.pattern(pattern: LOGGER_PATTERN, date_pattern: DATE_PATTERN)
   ) if config.log_to.include? "file"
 
   Logging.logger["ActiveSupport::Cache"].level = :off

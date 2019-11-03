@@ -1,6 +1,10 @@
 # NOTE: do not remove block parameters,
 #       or Unicorn will complain about incorrect arity
 
+require "logging"
+
+logger Logging.logger["Unicorn"]
+
 environment = ENV.fetch("RAILS_ENV") { "development" }
 
 working_directory File.expand_path("../", __dir__)

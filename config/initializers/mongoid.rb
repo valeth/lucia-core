@@ -1,4 +1,6 @@
-require "mongoid_log_layout"
+require "logging"
+require "logging/layouts/key_value"
+require "logging/context/mongoid"
 
 Rails.application.configure do
   logger = Logging.logger["Mongoid"]
@@ -7,6 +9,8 @@ Rails.application.configure do
   # Mongoid logs can be quite verbose, and spam stdout quickly.
   logger.additive = false
 
+  layout = Logging::Layouts::KeyValue.new(ctx: :mongoid, date_pattern: DATE_PATTERN)
+
   # Creates a separate log file for mongoid.
   logger.appenders = Logging.appenders.rolling_file("db_file",
     filename: Rails.root.join("log", "#{Rails.env}-mongoid.log").to_s,
@@ -14,7 +18,7 @@ Rails.application.configure do
     age: "daily",
     truncate: false,
     auto_flushing: true,
-    layout: MongoidLogLayout.new(Mongoid::Config, pattern: LOGGER_PATTERN)
+    layout: layout
   )
 
   config.mongoid.logger = logger
