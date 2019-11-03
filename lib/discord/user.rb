@@ -16,7 +16,7 @@ module Discord
     attribute :id, Types::Coercible::Integer
     attribute? :name, Types::Coercible::String.default("{Unknown}")
     attribute? :avatar_url, Types::Coercible::String.default(FALLBACK_AVATAR_URL)
-    attribute? :discriminator, Types::Coercible::Integer.optional
+    attribute? :discriminator, Types::Coercible::Integer.optional.constructor { |v| v.to_i(10) }
 
     def cache_key
       self.class.cache_key(id)
