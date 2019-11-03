@@ -15,6 +15,6 @@ class DiscordUserUpdaterJob < ApplicationJob
 private
 
   def all_ids
-    Donor.all_user_ids | Leaderboard.all_user_ids
+    Donor.all_user_ids | Leaderboard.top_user_ids(amount: 30)
   end
 end

@@ -21,19 +21,18 @@ class Leaderboard
       end
     end
 
-    def all
+    # Gets top user IDs from every leaderboard.
+    #
+    # @param amount [Integer] The amount of users to fetch per board
+    # @return [Array<Integer>] Unique list of IDs
+    def top_user_ids(amount: 30)
       Mongoid
         .client(:default)
         .collections
         .each_with_object([]) { |c, a| a << c.name.delete_suffix("Resource") if c.name.end_with?("Resource") }
-        .flat_map { |x| Leaderboard[x].all }
-    end
-
-    # Gets all user IDs from every leaderboard.
-    #
-    # @return [Array<Integer>] Unique list of IDs
-    def all_user_ids
-      all.pluck(:uid).uniq
+        .flat_map { |x| Leaderboard[x].limit(amount).desc(:score) }
+        .pluck(:uid)
+        .uniq
     end
 
     def by_guild_id(gid, amount: 20)
