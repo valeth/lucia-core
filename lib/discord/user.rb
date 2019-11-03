@@ -60,9 +60,10 @@ module Discord
         response = Discordrb::API::User.resolve(API.config.token, id)
         data = JSON.parse(response.body)
 
-        avatar_id = data["avatar"]
-        ext = avatar_id.start_with?("a_") ? "gif" : "png"
-        avatar_url = "https://cdn.discordapp.com/avatars/#{id}/#{avatar_id}.#{ext}"
+        avatar_url = data["avatar"]&.then do |avatar_id|
+          ext = avatar_id.start_with?("a_") ? "gif" : "png"
+          "https://cdn.discordapp.com/avatars/#{id}/#{avatar_id}.#{ext}"
+        end
 
         new(id: id, name: data["username"], discriminator: data["discriminator"], avatar_url: avatar_url)
       rescue RestClient::Exception => e
