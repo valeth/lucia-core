@@ -2,12 +2,7 @@ require "webmock/rspec"
 require "simplecov"
 
 SimpleCov.start "rails" do
-  add_filter "/app/controllers/application_controller.rb"
-  add_filter "/app/jobs/application_job.rb"
-  add_filter "/app/mailers/"
-
-  add_group "API", "app/api"
-  add_group "APIv1", "app/api/v1"
+  add_group "GraphQL", "app/graphql"
 
   # for CI
   add_filter "/cache/"
@@ -131,7 +126,8 @@ end
 
 # This stubs user ID lookups to Discord
 def discord_user_fetcher_stub
-  temp = Addressable::Template::new("#{Discord::API::BASE_URL}users/{uid}")
+  temp = Addressable::Template::new("#{Discord::API::BASE_URL}/users/{uid}")
+
   stub_request(:any, temp)
     .to_return do |request|
       uid = request.uri.path.split("/").last

@@ -35,6 +35,8 @@ gem "sidekiq-scheduler", "~> 3.0"
 gem "rest-client", "~> 2.1"
 gem "addressable", "~> 2.7"
 gem "rack-cors", "~> 1.0", require: "rack/cors"
+gem "dry-struct", "~> 1.0"
+gem "discordrb", "~> 3.3"
 
 group :test do
   gem "database_cleaner", "~> 1.7"

@@ -33,7 +33,6 @@ before_fork do |_server, _worker|
         p.io.inherit!
         p.start
         p.wait
-        p.close
       end
     # rubocop:disable Style/RescueStandardError
     rescue => e

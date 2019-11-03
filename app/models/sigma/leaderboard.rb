@@ -4,7 +4,7 @@ class Leaderboard
   @resources = {}
 
   def user
-    Discord::User[uid]
+    Discord::User.try_cache(uid) || Discord::User.new(id: uid)
   end
 
   class << self
@@ -19,6 +19,21 @@ class Leaderboard
 
         store_in collection: "#{name.to_s.downcase.camelize}Resource"
       end
+    end
+
+    def all
+      Mongoid
+        .client(:default)
+        .collections
+        .each_with_object([]) { |c, a| a << c.name.delete_suffix("Resource") if c.name.end_with?("Resource") }
+        .flat_map { |x| Leaderboard[x].all }
+    end
+
+    # Gets all user IDs from every leaderboard.
+    #
+    # @return [Array<Integer>] Unique list of IDs
+    def all_user_ids
+      all.pluck(:uid).uniq
     end
 
     def by_guild_id(gid, amount: 20)

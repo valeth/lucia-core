@@ -24,6 +24,9 @@ end
 # Print everything before exec
 STDOUT.flush
 
+# We do not need voice support in Discordrb
+ENV["DISCORDRB_NONACL"] = "1"
+
 if ARGV.empty?
   exec("bin/rails", "server", "-u", "unicorn", "-b", "0.0.0.0", "-p", "3000")
 else

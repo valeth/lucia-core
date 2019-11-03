@@ -8,14 +8,20 @@ RSpec.describe ::LuciaCoreSchema do
       it "can query all names of donors" do
         result = described_class.execute <<~GRAPHQL
           query {
-            donors { name }
+            donors {
+              tier
+              user { name }
+            }
           }
         GRAPHQL
 
         expect(result["data"])
           .to include(
             "donors" => all(include(
-              "name" => a_string_matching(/^Test\d+$/)
+              "tier" => be_an(Integer),
+              "user" => include(
+                "name" => a_string_matching(/^Test\d+$/)
+              )
             ))
           )
       end

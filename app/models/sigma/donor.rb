@@ -9,7 +9,15 @@ class Donor
   field :avatar, as: :fallback_avatar, type: String
 
   def user
-    @user ||= Discord::User
-      .get(duid, fallback_avatar_url: fallback_avatar, fallback_name: fallback_name)
+    Discord::User.try_cache(duid) || Discord::User.new(id: duid, avatar_url: fallback_avatar, name: fallback_name)
+  end
+
+  class << self
+    # Gets all user IDs of donors.
+    #
+    # @return [Array<Integer>] Unique list of IDs
+    def all_user_ids
+      pluck(:duid).uniq
+    end
   end
 end
