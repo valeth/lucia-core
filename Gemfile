@@ -34,7 +34,7 @@ gem "sidekiq-scheduler", "~> 3.0"
 # -------[ Misc ]-------
 gem "rest-client", "~> 2.1"
 gem "addressable", "~> 2.7"
-gem "rack-cors", "~> 1.0", require: "rack/cors"
+gem "rack-cors", "1.0.5"
 gem "dry-struct", "~> 1.0"
 gem "discordrb", "~> 3.3"
 
