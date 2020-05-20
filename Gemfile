@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "~> 2.6"
 
 # -------[ Core ]-------
-gem "rails", "~> 6.0.2", ">= 6.0.2.2"
+gem "rails", "~> 6.0.3", ">= 6.0.3.1"
 gem "rack-handlers", "~> 0.7", ">= 0.7.3"
 gem "dotenv-rails", "~> 2.7", ">= 2.7.5"
 gem "unicorn", "~> 5.5", platforms: %i[ruby]
@@ -14,7 +14,7 @@ gem "logging-rails", "~> 0.6", require: "logging/rails"
 gem "lograge", "~> 0.11", ">= 0.11.2"
 
 # -------[ Database ]-------
-gem "mongoid", "~> 7.0.5"
+gem "mongoid", "~> 7.0.6"
 
 # -------[ API ]-------
 gem "multi_json", "~> 1.14"
@@ -49,7 +49,7 @@ end
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
-  gem "rspec-rails", "~> 3.9", ">= 3.9.0"
+  gem "rspec-rails", "~> 3.9", ">= 3.9.1"
 end
 
 group :development do
