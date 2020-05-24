@@ -58,5 +58,5 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "rubocop", "0.67.2", require: false
   gem "pry-rails", "~> 0.3"
-  gem "puma", "~> 4.3", ">= 4.3.3"
+  gem "puma", "~> 4.3", ">= 4.3.5"
 end
