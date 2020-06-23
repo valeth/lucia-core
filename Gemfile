@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "~> 2.6"
 
 # -------[ Core ]-------
-gem "rails", "~> 6.0.3", ">= 6.0.3.1"
+gem "rails", "~> 6.0.3", ">= 6.0.3.2"
 gem "rack-handlers", "~> 0.7", ">= 0.7.3"
 gem "dotenv-rails", "~> 2.7", ">= 2.7.5"
 gem "unicorn", "~> 5.5", platforms: %i[ruby]
