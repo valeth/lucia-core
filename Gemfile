@@ -28,8 +28,8 @@ gem "redis-rails", ">= 5.0.2"
 
 # -------[ Jobs ]-------
 gem "childprocess", "~> 0.9"
-gem "sidekiq", "~> 6.0", ">= 6.0.2"
-gem "sidekiq-scheduler", "~> 3.0", ">= 3.0.0"
+gem "sidekiq", "~> 6.0", ">= 6.0.7"
+gem "sidekiq-scheduler", "~> 3.0", ">= 3.0.1"
 
 # -------[ Misc ]-------
 gem "rest-client", "~> 2.1"
