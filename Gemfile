@@ -3,9 +3,9 @@ source "https://rubygems.org"
 ruby "~> 2.6"
 
 # -------[ Core ]-------
-gem "rails", "~> 6.0.3", ">= 6.0.3.4"
+gem "rails", "~> 6.0.4", ">= 6.0.4.6"
 gem "rack-handlers", "~> 0.7", ">= 0.7.3"
-gem "dotenv-rails", "~> 2.7", ">= 2.7.5"
+gem "dotenv-rails", "~> 2.7", ">= 2.7.6"
 gem "unicorn", "~> 5.5", platforms: %i[ruby]
 
 # -------[ Logging & Error Handling ]-------
@@ -58,5 +58,5 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "rubocop", "0.67.2", require: false
   gem "pry-rails", "~> 0.3"
-  gem "puma", "~> 4.3", ">= 4.3.5"
+  gem "puma", "~> 4.3", ">= 4.3.11"
 end
