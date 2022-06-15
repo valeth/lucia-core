@@ -50,7 +50,8 @@ module Discord
     def token_valid?(token)
       return false unless token
 
-      /^\S{24}\.\S{6}\.\S{27}$/.match?(token)
+      # /^\S{24}\.\S{6}\.\S{27,39}$/.match?(token)
+      true
     end
   end
 end
