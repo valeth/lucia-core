@@ -25,7 +25,7 @@ module LuciaCore
     config.active_job.queue_adapter = :sidekiq
 
     redis_url = ENV.fetch("REDIS_URL") { "redis://localhost:6379/0/cache" }
-    config.cache_store = :redis_store, redis_url, { expires_in: 1.day }
+    config.cache_store = :redis_cache_store, { url: redis_url, expires_in: 1.day }
 
     # Loads config/lucia.yml
     config.lucia = config_for(:lucia)
