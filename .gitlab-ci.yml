@@ -1,4 +1,4 @@
-image: "ruby:2.6.3"
+image: "ruby:3.3.4"
 
 stages:
   - prepare
@@ -32,16 +32,12 @@ prepare:
   script:
     - bundle --version
     - bundle install
-  tags:
-    - ruby
 
 rubocop:
   extends: .test-job
   script:
     - bundle exec rubocop
   allow_failure: true
-  tags:
-    - ruby
 
 rspec:
   extends: .test-job
@@ -56,8 +52,6 @@ rspec:
   artifacts:
     paths:
       - coverage/
-  tags:
-    - ruby
 
 # Coverage report
 pages:
