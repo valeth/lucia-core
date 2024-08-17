@@ -4,7 +4,6 @@ AllCops:
   DisplayStyleGuide: false
   StyleGuideCopsOnly: false
   TargetRubyVersion: 3.3
-  TargetRailsVersion: 6
   Exclude:
     - "bin/**/*"
     - "cache/**/*"
@@ -45,6 +44,9 @@ Layout/IndentationConsistency:
 Layout/IndentationWidth:
   Enabled: true
 
+Layout/LineLength:
+  Max: 120
+
 Layout/SpaceAfterColon:
   Enabled: true
 
@@ -66,10 +68,10 @@ Layout/SpaceInsideHashLiteralBraces:
 Layout/SpaceInsideParens:
   Enabled: true
 
-Layout/Tab:
+Layout/IndentationStyle:
   Enabled: true
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: true
 
 Layout/TrailingWhitespace:
@@ -87,9 +89,6 @@ Lint/RequireParentheses:
 Style/AndOr:
   Enabled: true
 
-Style/BracesAroundHashParameters:
-  Enabled: true
-
 Style/HashSyntax:
   Enabled: true
 
@@ -99,14 +98,11 @@ Style/MethodDefParentheses:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/UnneededPercentQ:
+Style/RedundantPercentQ:
   Enabled: true
 
 
 # -------[ Metrics ]-------
-
-Metrics/LineLength:
-  Max: 120
 
 Metrics/MethodLength:
   Max: 20
