@@ -10,7 +10,7 @@ module Types
 
     def donors(tier: nil)
       if tier
-        Donor.where(tier: tier)
+        Donor.where(tier:)
       else
         Donor.all.desc(:tier)
       end

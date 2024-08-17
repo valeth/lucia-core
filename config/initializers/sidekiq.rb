@@ -15,7 +15,7 @@ def logger_for(name)
       age: "daily",
       truncate: false,
       auto_flushing: true,
-      layout: layout
+      layout:
     )
   end
 end

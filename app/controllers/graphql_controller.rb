@@ -6,7 +6,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
 
-    result = LuciaCoreSchema.execute(query, variables: variables, operation_name: operation_name)
+    result = LuciaCoreSchema.execute(query, variables:, operation_name:)
     render json: result
   end
 

@@ -18,7 +18,7 @@ Rails.application.configure do
     age: "daily",
     truncate: false,
     auto_flushing: true,
-    layout: layout
+    layout:
   )
 
   config.mongoid.logger = logger

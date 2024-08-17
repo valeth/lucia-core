@@ -53,7 +53,7 @@ if Rails.env.development? || Rails.env.test?
   gids = %w[200751504175398912 217081703137542145 320652200319909889 273534239310479360]
 
   ids.each.with_index(0) do |uid, i|
-    Leaderboard[:currency].find_or_create_by(uid: uid) do |m|
+    Leaderboard[:currency].find_or_create_by(uid:) do |m|
       m.score = rand(10000)
       m.origins = {
         "guilds" => { gids[i % 4] => rand(99) },
@@ -62,7 +62,7 @@ if Rails.env.development? || Rails.env.test?
       }
     end
 
-    Leaderboard[:cookies].find_or_create_by(uid: uid) do |m|
+    Leaderboard[:cookies].find_or_create_by(uid:) do |m|
       m.score = rand(20)
       m.origins = {
         "guilds" => { gids[i % 4] => rand(99) },
@@ -74,7 +74,7 @@ if Rails.env.development? || Rails.env.test?
 
   # User blacklists and sabotages
   [201657418701078529, 201769732234412032].each do |uid|
-    SabotagedUser.find_or_create_by(uid: uid)
+    SabotagedUser.find_or_create_by(uid:)
   end
 
   BlacklistedUser.find_or_create_by(uid: 145800603598192640) do |m|

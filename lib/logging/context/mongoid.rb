@@ -24,7 +24,7 @@ module Logging::Context
 
     def prepare_query_context(command, status, message)
       type = status == "STARTED" ? :query : :elapsed_time
-      { hostname: hostname, command: command, status: status, type => escape_message(message) }
+      { hostname:, command:, status:, type => escape_message(message) }
     end
 
     def hostname

@@ -21,15 +21,15 @@ module Types::Sigma
     field :command_count, GraphQL::Types::BigInt, null: false
 
     def commands(only: [], except: [])
-      get_statistic(CommandStatistic, only: only, except: except)
+      get_statistic(CommandStatistic, only:, except:)
     end
 
     def events(only: [], except: [])
-      get_statistic(EventStatistic, only: only, except: except)
+      get_statistic(EventStatistic, only:, except:)
     end
 
     def special(only: [], except: [])
-      get_statistic(SpecialStatistic, only: only, except: except)
+      get_statistic(SpecialStatistic, only:, except:)
     end
 
     def guild_count
@@ -54,9 +54,9 @@ module Types::Sigma
       if only.empty? && except.empty?
         resource.all
       elsif only.empty?
-        resource.filtered(except: except)
+        resource.filtered(except:)
       else
-        resource.filtered(only: only)
+        resource.filtered(only:)
       end
     end
   end

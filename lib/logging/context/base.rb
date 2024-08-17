@@ -9,7 +9,7 @@ module Logging::Context
         elsif message.respond_to?(:to_s)
           { message: escape_message(message.to_s) }
         else
-          { message: message }
+          { message: }
         end
     end
 

@@ -8,11 +8,11 @@ class Leaderboard
   end
 
   def user_sabotaged?
-    SabotagedUser.where(uid: uid).exists?
+    SabotagedUser.where(uid:).exists?
   end
 
   def user_blacklisted?
-    BlacklistedUser.where(uid: uid, total: true).exists?
+    BlacklistedUser.where(uid:, total: true).exists?
   end
 
   class << self

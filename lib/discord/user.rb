@@ -65,7 +65,7 @@ module Discord
           "https://cdn.discordapp.com/avatars/#{id}/#{avatar_id}.#{ext}"
         end
 
-        new(id: id, name: data["username"], discriminator: data["discriminator"], avatar_url: avatar_url)
+        new(id:, name: data["username"], discriminator: data["discriminator"], avatar_url:)
       rescue RestClient::Exception => e
         logger.error(self.class) { "Failed to fetch Discord user information: #{e}" }
         raise APIError, e
