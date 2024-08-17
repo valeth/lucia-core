@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "~> 2.6"
+ruby "~> 3.3"
 
 # -------[ Core ]-------
 gem "rails", "~> 6.0.4", ">= 6.0.4.6"

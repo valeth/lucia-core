@@ -3,7 +3,7 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: false
   StyleGuideCopsOnly: false
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 3.3
   TargetRailsVersion: 6
   Exclude:
     - "bin/**/*"
