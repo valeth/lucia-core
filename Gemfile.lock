@@ -101,12 +101,10 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    database_cleaner (2.0.2)
-      database_cleaner-active_record (>= 2, < 3)
-    database_cleaner-active_record (2.2.0)
-      activerecord (>= 5.a)
-      database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    database_cleaner-mongoid (2.0.1)
+      database_cleaner-core (~> 2.0.0)
+      mongoid
     date (3.3.4)
     diff-lcs (1.5.1)
     discordrb (3.5.0)
@@ -409,7 +407,7 @@ DEPENDENCIES
   addressable (~> 2.8)
   byebug
   childprocess (~> 5.1)
-  database_cleaner (~> 2.0)
+  database_cleaner-mongoid (~> 2.0)
   discordrb (~> 3.5)
   dotenv-rails (~> 3.1.2)
   dry-struct (~> 1.6)

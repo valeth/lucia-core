@@ -1,5 +1,6 @@
 require "webmock/rspec"
 require "simplecov"
+require "database_cleaner/mongoid"
 
 SimpleCov.start "rails" do
   add_group "GraphQL", "app/graphql"
@@ -107,8 +108,8 @@ RSpec.configure do |config|
 =end
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner[:mongoid].strategy = :deletion
+    DatabaseCleaner[:mongoid].clean_with(:deletion)
     Rails.application.load_seed
   end
 

@@ -7,21 +7,21 @@ volumes:
 
 services:
   database:
-    image: "mongo:3"
+    image: "docker.io/mongo:5"
     ports:
       - "27017:27017"
     volumes:
       - "mongodb:/data/db"
 
-  redis_cache:
-    image: "redis:4.0-alpine"
+  cache:
+    image: "docker.io/redis:7.4-alpine"
     ports:
       - "6380:6379"
     volumes:
       - "redis:/data"
 
-  redis_sidekiq:
-    image: "redis:4.0-alpine"
+  sidekiq:
+    image: "docker.io/redis:7.4-alpine"
     ports:
       - "6381:6379"
     volumes:

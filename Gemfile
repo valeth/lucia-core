@@ -43,7 +43,7 @@ gem "discordrb", "~> 3.5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 group :test do
-  gem "database_cleaner", "~> 2.0"
+  gem "database_cleaner-mongoid", "~> 2.0"
   gem "webmock", "~> 3.23"
   gem "simplecov", "~> 0.22", require: false
 end
