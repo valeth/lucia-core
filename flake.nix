@@ -44,7 +44,7 @@
         ];
 
         tools = with pkgs; [
-            ruby-lsp
+            rubyPackages_3_3.ruby-lsp
             bundix
         ];
     in {
