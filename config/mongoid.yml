@@ -5,7 +5,6 @@ development:
       hosts:
         - <%= ENV.fetch("MONGOID_SIGMA_HOST") { "localhost:27017" } %>
   options:
-    use_activesupport_time_zone: true
     use_utc: true
     app_name: LuciaCore
 
@@ -33,6 +32,5 @@ production:
           - 'dbOwner'
         auth_source: admin
   options:
-    use_activesupport_time_zone: true
     use_utc: true
     app_name: LuciaCore
