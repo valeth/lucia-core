@@ -12,7 +12,7 @@ Bundler.require(*Rails.groups)
 module LuciaCore
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.1
 
     config.autoload_paths.push(
       Rails.root.join("lib"),
