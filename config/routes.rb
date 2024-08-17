@@ -1,9 +1,6 @@
 require "sidekiq/web"
 require "sidekiq-scheduler/web"
 
-Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
-Sidekiq::Web.set :sessions, Rails.application.config.session_options
-
 Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
 

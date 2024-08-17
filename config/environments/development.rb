@@ -40,4 +40,9 @@ Rails.application.configure do
 
   # Show the logging configuration on STDOUT
   config.show_log_configuration = true
+
+  # Required for Sidekiq::Web
+  config.session_store :cookie_store, key: "_app_session"
+  config.middleware.use ActionDispatch::Cookies
+  config.middleware.use config.session_store, config.session_options
 end
