@@ -1,6 +1,7 @@
-:schedule:
-  update_user_cache:
-    class: DiscordUserUpdaterJob
-    every:
-      - 1h
-      - first_in: 1sec
+:scheduler:
+  :schedule:
+    update_user_cache:
+      class: DiscordUserUpdaterJob
+      every:
+        - 1h
+        - first_in: 1sec
