@@ -65,12 +65,7 @@ def docker(subcmd, *extra_args)
 
   puts "Using #{exe}"
 
-  args = [
-    subcmd,
-    "--file", PROJECT_ROOT.join("docker/Dockerfile").to_s,
-    "--ignorefile", PROJECT_ROOT.join("docker/ignore").to_s,
-    *extra_args,
-  ]
+  args = [ subcmd, *extra_args ]
 
   ChildProcess.build(exe, *args).tap do |p|
     p.io.stdout = $stdout
@@ -83,7 +78,11 @@ end
 def docker_build(image_name, tags)
   tags_with_image = tags.flat_map { |v| ["-t", "#{image_name}:#{v}"] }
   puts "Building #{tags.size} images..."
-  docker "build", *tags_with_image, "."
+
+  docker "build",
+    "--file", PROJECT_ROOT.join("docker/Dockerfile").to_s,
+    "--ignorefile", PROJECT_ROOT.join("docker/ignore").to_s,
+    *tags_with_image, "."
 end
 
 def docker_push(image_name, tags)
