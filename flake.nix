@@ -20,38 +20,30 @@
         overlays = [ nixpkgs-rb.overlays.default ];
         pkgs = import nixpkgs {
             inherit system overlays;
-            # FIXME: remove this after upgrade
-            config.permittedInsecurePackages = [
-                "openssl-1.1.1w"
-            ];
         };
 
         rubyVersion  = nixpkgs.lib.fileContents ./.ruby-version;
         ruby = (nixpkgs-rb.lib.mkRuby { inherit pkgs rubyVersion; });
 
-        gems = pkgs.bundlerEnv {
-            name = "gemset";
-            inherit ruby;
-            gemfile = ./Gemfile;
-            lockfile = ./Gemfile.lock;
-            gemset = ./gemset.nix;
-            groups = [ "default" "production" "development" "test" ];
-        };
-
-        buildInputs = with pkgs; [
+        buildInputs = [
             ruby
-            # gems
         ];
 
-        tools = with pkgs; [
-            rubyPackages_3_3.ruby-lsp
-            bundix
+        tools = [
+            # Installing the LSP through the editor usually works better
+            # rubyPackages_3_3.ruby-lsp
         ];
     in {
         devShells.${system}.default = pkgs.mkShell {
             name = "lucia-core";
             inherit buildInputs;
             packages = tools;
+
+            shellHook = ''
+              export BUNDLE_USER_CACHE="''${XDG_CACHE_HOME:-$HOME/.cache}/bundler"
+              export BUNDLE_USER_CONFIG="''${XDG_CONFIG_HOME:-$HOME/.config}/bundler"
+              export BUNDLE_USER_PLUGIN="''${XDG_DATA_HOME:-$HOME/.local/share}/bundler"
+            '';
         };
     };
 }
