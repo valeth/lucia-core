@@ -29,9 +29,14 @@
             ruby
         ];
 
-        tools = [
-            # Installing the LSP through the editor usually works better
-            # rubyPackages_3_3.ruby-lsp
+        podmanCompose = pkgs.writeShellScriptBin "compose" ''
+          exec ${pkgs.podman-compose}/bin/podman-compose -f ./docker/compose.yml "$@"
+        '';
+
+        tools = with pkgs; [
+            # installing the lsp through the editor usually works better
+            # rubypackages_3_3.ruby-lsp
+            podmanCompose
         ];
     in {
         devShells.${system}.default = pkgs.mkShell {
