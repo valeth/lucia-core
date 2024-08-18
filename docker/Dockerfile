@@ -1,6 +1,6 @@
 # |-------<[ Build ]>-------|
 
-FROM ruby:2.6-alpine AS build
+FROM docker.io/ruby:3.3-alpine AS build
 
 RUN mkdir -p /build
 WORKDIR /build
@@ -13,20 +13,20 @@ RUN apk add --no-cache --virtual \
     libxslt-dev \
     linux-headers \
     libc-dev \
- && bundle install --deployment --without="development test" \
- && apk del build-dependencies
+    git \
+ && bundle config set deployment true \
+ && bundle config set without development test \
+ && bundle install
 
 
 # |-------<[ App ]>-------|
 
-FROM ruby:2.6-alpine AS lucia-core
+FROM docker.io/ruby:3.3-alpine AS lucia-core
 
 LABEL maintainer="dev.patrick.auernig@gmail.com"
 
-RUN apk add --update --no-cache \
-    tzdata \
- && gem install \
-    bundler
+RUN apk add --update --no-cache tzdata \
+ && gem install bundler
 
 ARG user_uid=1000
 ARG user_gid=1000
@@ -40,7 +40,9 @@ USER app
 
 COPY --chown=app:app --from=build /build/vendor/bundle ./vendor/bundle
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --deployment --without="development test"
+RUN bundle config set deployment true
+RUN bundle config set without development test
+RUN bundle install
 COPY --chown=app:app ./ ./
 
 EXPOSE 3000

@@ -1,0 +1,119 @@
+#!/usr/bin/env ruby
+
+require "childprocess"
+require "pathname"
+
+
+ARGV.first&.split(".") || []
+
+PROJECT_ROOT = Pathname(__FILE__).dirname.parent.realpath.freeze
+
+
+class ExecutableNotFound < StandardError
+  def initialize(name)
+    super("Could not find #{name} in PATH")
+  end
+end
+
+def find_executable(name)
+  path = ENV["PATH"].split(File::PATH_SEPARATOR).find do |path|
+    File.executable?("#{path}/#{name}")
+  end
+
+  raise ExecutableNotFound.new(name) unless path
+
+  "#{path}/#{name}"
+end
+
+
+class String
+  def int?
+    /^\d+$/.match?(self)
+  end
+end
+
+class InvalidVersion < StandardError
+  def initialize
+    super("Requires version of format x.y.z")
+  end
+end
+
+def validate_version(version)
+  semver = version&.split(".")
+  raise InvalidVersion unless semver&.size == 3
+  raise InvalidVersion unless semver&.all?(&:int?)
+  return semver.map.with_index { |v, i| semver[0..i].join(".") }
+end
+
+def last_version_from_tags
+  `git tag -l`
+    .lines(chomp: true)
+    .filter_map { |t| /^.?(\d+\.\d+\.\d+)$/.match(t)&.captures&.first }
+    .sort
+    .last
+end
+
+
+def docker(subcmd, *extra_args)
+  exe = nil
+
+  begin
+    exe = find_executable("podman")
+  rescue ExecutableNotFound
+    exe = find_executable("docker")
+  end
+
+  puts "Using #{exe}"
+
+  args = [
+    subcmd,
+    "--file", PROJECT_ROOT.join("docker/Dockerfile").to_s,
+    "--ignorefile", PROJECT_ROOT.join("docker/ignore").to_s,
+    *extra_args,
+  ]
+
+  ChildProcess.build(exe, *args).tap do |p|
+    p.io.stdout = $stdout
+    p.io.stderr = $stderr
+    p.start
+    p.wait
+  end
+end
+
+def docker_build(image_name, tags)
+  tags_with_image = tags.flat_map { |v| ["-t", "#{image_name}:#{v}"] }
+  puts "Building #{tags.size} images..."
+  docker "build", *tags_with_image, "."
+end
+
+def docker_push(image_name, tags)
+  puts "Pushing #{tags.size} images to #{image_name}"
+  tags.each do |tag|
+    docker "push", "#{image_name}:#{tag}"
+  end
+end
+
+def main(subcmd, *args)
+  image_name = "registry.gitlab.com/lu-ci/lucia/lucia-core"
+
+  version = args.first || last_version_from_tags
+  raise "Could not determine tags" unless version
+
+  tags = ["latest", *validate_version(version)]
+  puts "Tags: #{tags.join(", ")}"
+
+  case subcmd
+  when "build"
+    docker_build(image_name, tags)
+  when "push"
+    docker_push(image_name, tags)
+  end
+rescue InvalidVersion => e
+  warn e.message
+  exit 1
+rescue ExecutableNotFound
+  warn "Could not find podman or docker executables"
+  exit 2
+end
+
+main(*ARGV)
